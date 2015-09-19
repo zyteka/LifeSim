@@ -13,6 +13,6 @@ typedef struct Vertex{
 }Vertex;
 
 //A single index struct has 3 indices to 3 vertices creating a triangle
-typedef struct Index{
-	glm::uvec3 face;
+typedef struct Face{
+	glm::uvec3 indices;
 }Index;

@@ -1,6 +1,7 @@
 #include "BasicIncludes.h"
 
-
+void Update(double);
+void Draw();
 
 int main(){
 

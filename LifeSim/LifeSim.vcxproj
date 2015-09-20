@@ -120,6 +120,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="organism.cpp" />
+    <ClCompile Include="rand.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="organism.h" />
+    <ClInclude Include="rand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

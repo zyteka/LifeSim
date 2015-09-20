@@ -1,4 +1,5 @@
 #include <iostream>
+#include "rand.h"
 
 int main(){
 

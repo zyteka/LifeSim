@@ -4,7 +4,6 @@
 
 void Update(double);
 void Draw();
-#include <iostream>
 
 int main(){
 

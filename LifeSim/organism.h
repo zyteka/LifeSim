@@ -25,6 +25,18 @@ public:
 	//Compare "Species" of 2 Organisms
 	int compareSpecies(Organism other) const;
 
+	//Attempt to Eat
+	bool eat();
+
+	//Attempt to Sleep
+	bool sleep();
+
+	//Attempt to Reproduce
+	bool reprouce(Organism other);
+
+	//Attempt to Mutate Organism
+	bool mutate();
+
 private:
 
 	//Organism name
@@ -38,5 +50,8 @@ private:
 
 	//Organism's appendages
 	std::vector<Appendage> appendages;
+
+	//Organism's Current Energy (Effected by food and sleep)
+	int energy;
 
 };

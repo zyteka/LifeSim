@@ -1,6 +1,5 @@
 #include "organism.h"
 
-
 //Constructor
 Organism::Organism()
 {
@@ -35,6 +34,8 @@ std::string Organism::getName() const {
 //Approximate "Species" of Organism by hashing its member variables
 int Organism::getSpecies() const {
 	//Add hasing function here
+
+	return 0;
 }
 
 //Compare "Species" of 2 Organisms
@@ -42,4 +43,6 @@ int Organism::compareSpecies(Organism other) const {
 	int otherSpecies = other.getSpecies();
 
 	//Add comparison of hash values here
+
+	return 0;
 }

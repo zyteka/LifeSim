@@ -32,7 +32,7 @@ public:
 	bool sleep();
 
 	//Attempt to Reproduce
-	bool reprouce(Organism other);
+	bool reproduce(Organism other);
 
 	//Attempt to Mutate Organism
 	bool mutate();

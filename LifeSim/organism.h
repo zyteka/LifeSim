@@ -1,7 +1,7 @@
-#include <iostream>
-//#include <string>
-#include <vector>
+#pragma once
 
+#include <iostream>
+#include <vector>
 #include "rand.h"
 
 
@@ -55,3 +55,4 @@ private:
 	int energy;
 
 };
+

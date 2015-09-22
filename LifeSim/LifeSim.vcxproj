@@ -128,11 +128,9 @@
     <ClInclude Include="Metrics.h" />
     <ClInclude Include="Object.h" />
     <ClCompile Include="organism.cpp" />
-    <ClCompile Include="rand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="organism.h" />
-    <ClInclude Include="rand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

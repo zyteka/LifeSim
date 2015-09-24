@@ -24,6 +24,9 @@
     <ClCompile Include="organism.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicIncludes.h">

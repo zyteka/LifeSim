@@ -119,15 +119,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderSupport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicIncludes.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="GlobalStructures.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="InputHelper.h" />
     <ClInclude Include="Metrics.h" />
     <ClInclude Include="Object.h" />
     <ClCompile Include="organism.cpp" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderSupport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="organism.h" />

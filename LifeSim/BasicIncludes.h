@@ -18,3 +18,4 @@
 #include <cmath>
 #include "Metrics.h"
 #include "GlobalStructures.h"
+#include <functional>

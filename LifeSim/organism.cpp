@@ -9,15 +9,15 @@ Organism::Organism()
 	++next_id;
 
 	//First and Las tname lengths
-	int fNameLen = closedRandInt(3, 8);
-	int lNameLen = closedRandInt(4, 12);
+	int fNameLen = GetDistribution(std::uniform_int_distribution<int>(3, 8));
+	int lNameLen = GetDistribution(std::uniform_int_distribution<int>(4, 12));
 
 	for (int i = 0; i < fNameLen; ++i) {
-		fName += static_cast<char>(closedRandInt(1, 26));
+		fName += static_cast<char>(GetDistribution(std::uniform_int_distribution<int>(1, 26)));
 	}
 
 	for (int i = 0; i < lNameLen; ++i) {
-		lName += static_cast<char>(closedRandInt(1, 26));
+		lName += static_cast<char>(GetDistribution(std::uniform_int_distribution<int>(1, 26)));
 	}
 }
 

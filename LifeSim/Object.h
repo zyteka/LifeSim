@@ -8,8 +8,10 @@ public:
 	Object();
 	~Object();
 
-	std::vector<Index>* GetIndices();
-	std::vector<Vertex>* GetVertices();
+	void Draw();
+
+	std::vector<Index> GetIndices();
+	std::vector<Vertex> GetVertices();
 private:
 	std::vector<Vertex> vertices;
 	std::vector<Index> indices;

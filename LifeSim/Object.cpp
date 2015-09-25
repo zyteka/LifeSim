@@ -10,9 +10,13 @@ Object::~Object()
 {
 }
 
-std::vector<Index>* Object::GetIndices(){
+void Draw() {
 
 }
-std::vector<Vertex>* Object::GetVertices(){
 
+std::vector<Index> Object::GetIndices(){
+	return indices;
+}
+std::vector<Vertex> Object::GetVertices(){
+	return vertices;
 }

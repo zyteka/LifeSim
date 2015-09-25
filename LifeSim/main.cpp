@@ -3,12 +3,15 @@
 #include <iostream>
 #include "rand.h"
 #include "BasicIncludes.h"
+#include "Camera.h"
+#include "Input.h"
 
 
 
 //Function List
 void Update(double);
 void Draw();
+void CameraInput();
 void InitializeWindow();
 void Terminate();
 
@@ -17,6 +20,7 @@ GLFWwindow* mainThread;
 glm::uvec2 SCREEN_SIZE;
 Camera camera;
 glm::vec2 mouseChangeDegrees;
+float deltaTime;
 
 void InitializeWindow() {
 
@@ -108,6 +112,106 @@ void InitializeWindow() {
 	SetInputWindow(mainThread);
 }
 
+
+void Run() {
+
+		//timer info for loop
+		double t = 0.0f;
+		double currentTime = glfwGetTime();
+		double accumulator = 0.0f;
+
+		glfwPollEvents();		//stop loop when glfw exit is called
+		glfwSetCursorPos(mainThread, SCREEN_SIZE.x / 2.0f, SCREEN_SIZE.y / 2.0f);
+
+
+		while (!glfwWindowShouldClose(mainThread)) {
+			double newTime = glfwGetTime();
+			double frameTime = newTime - currentTime;
+			//std::cout << "FPS:: " <<1.0f / frameTime << std::endl;
+
+			//setting up timers
+			if (frameTime > 0.25) {
+				frameTime = 0.25;
+			}
+			currentTime = newTime;
+			accumulator += frameTime;
+
+			//# of updates based on accumulated time
+
+			while (accumulator >= deltaTime) {
+
+				//loading and updates for multithreading
+
+				//set cursor in center
+				double xPos;
+				double yPos;
+				glfwGetCursorPos(mainThread, &xPos, &yPos);
+				xPos -= (SCREEN_SIZE.x / 2.0);
+				yPos -= (SCREEN_SIZE.y / 2.0);
+
+				mouseChangeDegrees.x = (float)(xPos / SCREEN_SIZE.x *camera.fieldOfView().x);
+				mouseChangeDegrees.y = (float)(yPos / SCREEN_SIZE.y *camera.fieldOfView().y);
+
+
+				camera.offsetOrientation(mouseChangeDegrees.x, mouseChangeDegrees.y);
+				
+				glfwSetCursorPos(mainThread, SCREEN_SIZE.x / 2.0f, SCREEN_SIZE.y / 2.0f);
+
+
+
+				glfwPollEvents(); //executes all set input callbacks
+
+				CameraInput(); //bypasses input system for direct camera manipulation
+				Update(deltaTime); //updates all objects based on the constant deltaTime.
+
+				t += deltaTime;
+				accumulator -= deltaTime;
+			}
+
+
+			//draw
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+			Draw();
+
+			glfwSwapBuffers(mainThread);
+	}
+}
+
+void CameraInput() {
+	double moveSpeed;
+	if (glfwGetKey(mainThread, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+		moveSpeed = 9 * METER * deltaTime;
+	}
+	else if (glfwGetKey(mainThread, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) {
+		moveSpeed = 1 * METER * deltaTime;
+	}
+	else {
+		moveSpeed = 4.5 * METER * deltaTime;
+	}
+
+
+	if (glfwGetKey(mainThread, GLFW_KEY_S) == GLFW_PRESS) {
+		camera.offsetPosition(float(moveSpeed) * -camera.forward());
+	}
+	else if (glfwGetKey(mainThread, GLFW_KEY_W) == GLFW_PRESS) {
+		camera.offsetPosition(float(moveSpeed) * camera.forward());
+	}
+	if (glfwGetKey(mainThread, GLFW_KEY_A) == GLFW_PRESS) {
+		camera.offsetPosition(float(moveSpeed) * -camera.right());
+	}
+	else if (glfwGetKey(mainThread, GLFW_KEY_D) == GLFW_PRESS) {
+		camera.offsetPosition(float(moveSpeed) * camera.right());
+	}
+	if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
+		camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 1, 0));
+	}
+	else if (glfwGetKey(mainThread, GLFW_KEY_X) == GLFW_PRESS) {
+		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 1, 0));
+	}
+}
 
 int main(){
 

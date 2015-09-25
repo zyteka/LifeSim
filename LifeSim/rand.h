@@ -1,16 +1,13 @@
-#ifndef _RAND_H_
-#define _RAND_H_
+#pragma once
 
-//Generates a uniform random integer value in [a,b)
-int randInt(int a, int b);
+#include <random>
+#include <chrono>
 
-//Generates a uniform random integer value in [0,b)
-int RandInt(int b);
-
-//Generates a uniform random integer value in [a,b]
-int closedRandInt(int a, int b);
-
-//Generates a uniform random integer value in [0,b]
-int closedRandInt(int b);
-
-#endif
+std::uniform_real_distribution<float> distribution01(0.0f, 1.0f);
+std::mt19937 generator;
+void InitRandom(){
+	generator = std::mt19937(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+}
+void GetDistribution(std::uniform_real_distribution<float> distro){
+	distro(generator);
+}

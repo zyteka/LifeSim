@@ -10,8 +10,8 @@ Object::~Object()
 {
 }
 
-void Draw() {
-
+void Object::Draw()
+{
 }
 
 std::vector<Index> Object::GetIndices(){

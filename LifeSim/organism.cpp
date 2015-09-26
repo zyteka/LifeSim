@@ -1,4 +1,4 @@
-#include "organism.h"
+#include "Organism.h"
 
 //Constructor
 Organism::Organism()
@@ -45,4 +45,24 @@ int Organism::compareSpecies(Organism other) const {
 	//Add comparison of hash values here
 
 	return 0;
+}
+
+bool Organism::eat()
+{
+	return false;
+}
+
+bool Organism::sleep()
+{
+	return false;
+}
+
+bool Organism::reproduce(Organism other)
+{
+	return false;
+}
+
+bool Organism::mutate()
+{
+	return false;
 }

@@ -31,7 +31,7 @@ int BoundingBox::getLayer() {
 }
 
 uint BoundingBox::numChildren() {
-	return children.size();
+	return uint(children.size());
 }
 
 bool BoundingBox::addChild(BoundingBox b) {

@@ -121,9 +121,13 @@
   <ItemGroup>
     <ClCompile Include="Anatomy.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="Rand.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderSupport.cpp" />
   </ItemGroup>
@@ -131,6 +135,7 @@
     <ClInclude Include="Anatomy.h" />
     <ClInclude Include="BasicIncludes.h" />
     <ClInclude Include="BoundingBox.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="GlobalStructures.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputHelper.h" />

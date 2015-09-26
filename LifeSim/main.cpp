@@ -11,6 +11,7 @@
 void Update(double);
 void Draw();
 void CameraInput();
+void MouseInput();
 void InitializeWindow();
 void Terminate();
 void Run();
@@ -18,13 +19,17 @@ void Run();
 //Variables
 GLFWwindow* mainThread;
 glm::uvec2 SCREEN_SIZE;
-Camera camera;
+Camera camera = Camera();
 glm::vec2 mouseChangeDegrees;
 float deltaTime;
 
+void Terminate() {
+	glfwTerminate();
+	exit(0);
+}
+
 void InitializeWindow() {
 
-	
 	//
 	if (!glfwInit()) {
 		Terminate();
@@ -115,6 +120,7 @@ void InitializeWindow() {
 
 void Run() {
 
+		InitializeWindow();
 		//timer info for loop
 		double t = 0.0f;
 		double currentTime = glfwGetTime();
@@ -140,25 +146,8 @@ void Run() {
 
 			while (accumulator >= deltaTime) {
 
-				//loading and updates for multithreading
-
-				//set cursor in center
-				double xPos;
-				double yPos;
-				glfwGetCursorPos(mainThread, &xPos, &yPos);
-				xPos -= (SCREEN_SIZE.x / 2.0);
-				yPos -= (SCREEN_SIZE.y / 2.0);
-
-				mouseChangeDegrees.x = (float)(xPos / SCREEN_SIZE.x *camera.fieldOfView().x);
-				mouseChangeDegrees.y = (float)(yPos / SCREEN_SIZE.y *camera.fieldOfView().y);
-
-
-				camera.offsetOrientation(mouseChangeDegrees.x, mouseChangeDegrees.y);
 				
-				glfwSetCursorPos(mainThread, SCREEN_SIZE.x / 2.0f, SCREEN_SIZE.y / 2.0f);
-
-
-
+				MouseInput();//update mouse change
 				glfwPollEvents(); //executes all set input callbacks
 
 				CameraInput(); //bypasses input system for direct camera manipulation
@@ -179,7 +168,21 @@ void Run() {
 			glfwSwapBuffers(mainThread);
 	}
 }
+void MouseInput() {
+	double xPos;
+	double yPos;
+	glfwGetCursorPos(mainThread, &xPos, &yPos);
+	xPos -= (SCREEN_SIZE.x / 2.0);
+	yPos -= (SCREEN_SIZE.y / 2.0);
 
+	mouseChangeDegrees.x = (float)(xPos / SCREEN_SIZE.x *camera.fieldOfView().x);
+	mouseChangeDegrees.y = (float)(yPos / SCREEN_SIZE.y *camera.fieldOfView().y);
+
+
+	camera.offsetOrientation(mouseChangeDegrees.x, mouseChangeDegrees.y);
+
+	glfwSetCursorPos(mainThread, SCREEN_SIZE.x / 2.0f, SCREEN_SIZE.y / 2.0f);
+}
 void CameraInput() {
 	double moveSpeed;
 	if (glfwGetKey(mainThread, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
@@ -213,13 +216,17 @@ void CameraInput() {
 	}
 }
 
+void Update(double dt) {
+
+}
+void Draw() {
+
+}
 int main(){
 
-	//Comments
-	//#define Connor GOD 
-	//More Comments
+	Run();
 
-	std::cout << "Hello World" << std::endl;
+	Terminate();
 
 	return 0;
 }

@@ -1,8 +1,7 @@
 //put global includes in 'BasicIncludes'
 
-#include <iostream>
-#include "rand.h"
 #include "BasicIncludes.h"
+#include "rand.h"
 #include "Camera.h"
 #include "Input.h"
 
@@ -14,6 +13,7 @@ void Draw();
 void CameraInput();
 void InitializeWindow();
 void Terminate();
+void Run();
 
 //Variables
 GLFWwindow* mainThread;

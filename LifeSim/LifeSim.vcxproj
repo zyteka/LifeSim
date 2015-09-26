@@ -123,6 +123,7 @@
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Organism.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderSupport.cpp" />
   </ItemGroup>
@@ -135,13 +136,10 @@
     <ClInclude Include="InputHelper.h" />
     <ClInclude Include="Metrics.h" />
     <ClInclude Include="Object.h" />
-    <ClCompile Include="organism.cpp" />
+    <ClInclude Include="Organism.h" />
+    <ClInclude Include="Rand.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderSupport.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="organism.h" />
-    <ClInclude Include="rand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

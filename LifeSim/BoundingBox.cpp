@@ -1,6 +1,11 @@
 #include "BoundingBox.h"
 #include <list>
 
+BoundingBox::BoundingBox()
+{
+	layer = 0;
+	parent = NULL;
+}
 
 BoundingBox::BoundingBox(int l, BoundingBox *p)
 {
@@ -25,12 +30,12 @@ int BoundingBox::getLayer() {
 	return layer;
 }
 
-int BoundingBox::numChildren() {
+uint BoundingBox::numChildren() {
 	return children.size();
 }
 
 bool BoundingBox::addChild(BoundingBox b) {
-	if ((b.getLayer() <= layer + 1) && b.getLayer >= layer - 1) {
+	if ((b.getLayer() <= layer + 1) && b.getLayer() >= layer - 1) {
 		children.push_back(b);
 		return true;
 	}

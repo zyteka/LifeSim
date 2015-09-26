@@ -2,11 +2,13 @@
 
 
 
-Anatomy::Anatomy()
-{
+Anatomy::Anatomy(){
+	mainPart = BoundingBox();
+
 }
 
 
-Anatomy::~Anatomy()
-{
+Anatomy::~Anatomy(){
+
+
 }

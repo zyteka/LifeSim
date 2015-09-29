@@ -99,4 +99,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="vertex-shader[basic].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="fragment-shader[basic].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

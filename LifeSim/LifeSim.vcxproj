@@ -146,6 +146,10 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderSupport.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="fragment-shader[basic].txt" />
+    <Text Include="vertex-shader[basic].txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

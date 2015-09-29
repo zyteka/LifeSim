@@ -4,7 +4,7 @@
 #include "rand.h"
 #include "Camera.h"
 #include "Input.h"
-
+#include "Object.h"
 
 
 //Function List
@@ -117,6 +117,7 @@ void InitializeWindow() {
 	SetInputWindow(mainThread);
 }
 
+Object testObj = Object();
 
 void Run() {
 
@@ -128,6 +129,7 @@ void Run() {
 
 		glfwPollEvents();		//stop loop when glfw exit is called
 		glfwSetCursorPos(mainThread, SCREEN_SIZE.x / 2.0f, SCREEN_SIZE.y / 2.0f);
+
 
 
 		while (!glfwWindowShouldClose(mainThread)) {
@@ -220,7 +222,7 @@ void Update(double dt) {
 
 }
 void Draw() {
-
+	testObj.Draw(camera);
 }
 int main(){
 

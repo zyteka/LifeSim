@@ -1,4 +1,4 @@
-#version 440 core
+#version 420 core
 
 in vec3 vert_VS_in;
 in vec3 normal_VS_in;

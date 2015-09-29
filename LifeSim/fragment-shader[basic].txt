@@ -1,4 +1,4 @@
-#version 440 core
+#version 420 core
 
 
 in vec3 vert_FS_in;

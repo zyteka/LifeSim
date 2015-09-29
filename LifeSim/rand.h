@@ -1,16 +1,9 @@
-#ifndef _RAND_H_
-#define _RAND_H_
+#pragma once
 
-//Generates a uniform random integer value in [a,b)
-int randInt(int a, int b);
+#include <random>
+#include <chrono>
+#include "BasicIncludes.h"
 
-//Generates a uniform random integer value in [0,b)
-int RandInt(int b);
 
-//Generates a uniform random integer value in [a,b]
-int closedRandInt(int a, int b);
-
-//Generates a uniform random integer value in [0,b]
-int closedRandInt(int b);
-
-#endif
+float GetDistribution(std::uniform_real_distribution<float> distro);
+int GetDistribution(std::uniform_int_distribution<int> distro);

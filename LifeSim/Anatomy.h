@@ -5,6 +5,7 @@
 class Anatomy
 {
 public:
+	Anatomy();
 	Anatomy(int l);
 	~Anatomy();
 	

@@ -21,7 +21,7 @@ GLFWwindow* mainThread;
 glm::uvec2 SCREEN_SIZE;
 Camera camera = Camera();
 glm::vec2 mouseChangeDegrees;
-float deltaTime;
+double deltaTime;
 
 
 std::vector<Object*> objects;
@@ -122,7 +122,7 @@ void InitializeWindow() {
 }
 
 void Run() {
-
+		deltaTime = 1.0 / 60;
 		InitializeWindow();
 
 		Object testObj = Object();
@@ -186,6 +186,8 @@ void MouseInput() {
 	mouseChangeDegrees.x = (float)(xPos / SCREEN_SIZE.x *camera.fieldOfView().x);
 	mouseChangeDegrees.y = (float)(yPos / SCREEN_SIZE.y *camera.fieldOfView().y);
 
+	/*std::cout << "Change in x (mouse): " << mouseChangeDegrees.x << std::endl;
+	std::cout << "Change in y (mouse): " << mouseChangeDegrees.y << std::endl;*/
 
 	camera.offsetOrientation(mouseChangeDegrees.x, mouseChangeDegrees.y);
 
@@ -217,10 +219,10 @@ void CameraInput() {
 		camera.offsetPosition(float(moveSpeed) * camera.right());
 	}
 	if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
-		camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 1, 0));
+		camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 0, 1));
 	}
 	else if (glfwGetKey(mainThread, GLFW_KEY_X) == GLFW_PRESS) {
-		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 1, 0));
+		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 0, 1));
 	}
 }
 

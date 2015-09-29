@@ -10,6 +10,7 @@ void Draw();
 int main(){
 
 	//Comments
+	//#define Connor GOD 
 	//More Comments
 
 	std::cout << "Hello World" << std::endl;

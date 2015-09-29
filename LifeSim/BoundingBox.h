@@ -4,6 +4,7 @@
 class BoundingBox : public Object
 {
 public:
+	BoundingBox();
 	BoundingBox(int l, BoundingBox *p);
 	~BoundingBox();
 

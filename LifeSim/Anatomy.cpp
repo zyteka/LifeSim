@@ -2,8 +2,9 @@
 
 
 
-Anatomy::Anatomy()
+Anatomy::Anatomy(int l)
 {
+	mainPart = BoundingBox(l, NULL);
 }
 
 

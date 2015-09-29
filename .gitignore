@@ -9,8 +9,6 @@
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
-x64/
 build/
 bld/
 [Bb]in/
@@ -187,3 +185,11 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/LifeSim/x64/Release/LifeSim.tlog/CL.command.1.tlog
+/LifeSim/x64/Release/LifeSim.tlog/CL.read.1.tlog
+/LifeSim/x64/Release/LifeSim.tlog/CL.write.1.tlog
+/LifeSim/x64/Release/LifeSim.tlog/LifeSim.lastbuildstate
+/LifeSim/x64/Release/LifeSim.tlog/link.command.1.tlog
+/LifeSim/x64/Release/LifeSim.tlog/link.read.1.tlog
+/LifeSim/x64/Release/LifeSim.tlog/link.write.1.tlog
+/LifeSim/x64/Release/LifeSim.tlog/unsuccessfulbuild

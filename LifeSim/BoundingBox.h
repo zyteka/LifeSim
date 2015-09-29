@@ -1,6 +1,8 @@
 #pragma once
-#include <list>
+
+#include "BasicIncludes.h"
 #include "Object.h"
+
 class BoundingBox : public Object
 {
 public:
@@ -10,7 +12,7 @@ public:
 
 	BoundingBox* getParent();
 	std::list<BoundingBox> getChildren();
-	int numChildren();
+	uint numChildren();
 	int getLayer();
 	bool addChild(BoundingBox b);
 

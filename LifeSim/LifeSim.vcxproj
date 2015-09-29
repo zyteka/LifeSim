@@ -26,26 +26,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -121,21 +121,40 @@
   <ItemGroup>
     <ClCompile Include="Anatomy.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="Rand.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderSupport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Anatomy.h" />
     <ClInclude Include="BasicIncludes.h" />
     <ClInclude Include="BoundingBox.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="GlobalStructures.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="InputHelper.h" />
     <ClInclude Include="Metrics.h" />
     <ClInclude Include="Object.h" />
-    <ClCompile Include="organism.cpp" />
+    <ClInclude Include="Organism.h" />
+    <ClInclude Include="Rand.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderSupport.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="organism.h" />
-    <ClInclude Include="rand.h" />
+    <Text Include="fragment-shader[basic].txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </Text>
+    <Text Include="vertex-shader[basic].txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

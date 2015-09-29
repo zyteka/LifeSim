@@ -1,12 +1,12 @@
-#include <iostream>
-//#include <string>
-#include <vector>
+#pragma once
 
+#include <iostream>
+#include <vector>
 #include "rand.h"
 
 
 //Remove this once Appendage class prototyped with header file
-class Appendage;
+//class Appendage;
 
 class Organism
 {
@@ -49,9 +49,10 @@ private:
 	int x, y, z;
 
 	//Organism's appendages
-	std::vector<Appendage> appendages;
+	//std::vector<Appendage> appendages;
 
 	//Organism's Current Energy (Effected by food and sleep)
 	int energy;
 
 };
+

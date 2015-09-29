@@ -19,14 +19,14 @@ void Object::Draw(Camera& camera)
 	shader->use();
 	glBindVertexArray(vao);
 	shader->setUniform(cameraUniform, camera.matrix());
-	glDrawElements(GL_TRIANGLES, (6), GL_UNSIGNED_INT, (GLvoid*)0);
+	glDrawElements(GL_TRIANGLES, (indices.size()*3), GL_UNSIGNED_INT, (GLvoid*)0);
 	glBindVertexArray(0);
 	shader->stopUsing();
 
 
 }
 void Object::Load(){
-	shader = LoadShaders("Resource Files\\vertex-shader[basic].txt", "Resource Files\\fragment-shader[basic].txt");
+	shader = LoadShaders("vertex-shader[basic].txt", "fragment-shader[basic].txt");
 	cameraUniform = shader->uniform("camera");
 	
 

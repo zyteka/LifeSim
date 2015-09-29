@@ -23,6 +23,10 @@ Camera camera = Camera();
 glm::vec2 mouseChangeDegrees;
 float deltaTime;
 
+
+std::vector<Object*> objects;
+
+
 void Terminate() {
 	glfwTerminate();
 	exit(0);
@@ -105,8 +109,8 @@ void InitializeWindow() {
 	// setup camera 
 	camera.setViewportAspectRatio(SCREEN_SIZE.x / (float)SCREEN_SIZE.y);
 
-	camera.setPosition(glm::vec3(-(METER* 5), METER * 5, -(METER * 5)));
-	camera.offsetOrientation(135, 45);
+	camera.setPosition(glm::vec3(0.0f, 0.0f, (METER)));
+	camera.offsetOrientation(0.0f, -45);
 
 	//unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
 	//threads = new ThreadPool(concurentThreadsSupported);
@@ -117,11 +121,13 @@ void InitializeWindow() {
 	SetInputWindow(mainThread);
 }
 
-Object testObj = Object();
-
 void Run() {
 
 		InitializeWindow();
+
+		Object testObj = Object();
+		objects.push_back(&testObj);
+
 		//timer info for loop
 		double t = 0.0f;
 		double currentTime = glfwGetTime();
@@ -222,7 +228,9 @@ void Update(double dt) {
 
 }
 void Draw() {
-	testObj.Draw(camera);
+	for (int i = 0; i < objects.size();i++){
+		objects[i]->Draw(camera);
+	}
 }
 int main(){
 

@@ -23,6 +23,7 @@ Camera camera = Camera();
 glm::vec2 mouseChangeDegrees;
 float deltaTime;
 
+//called instead of exit
 void Terminate() {
 	glfwTerminate();
 	exit(0);

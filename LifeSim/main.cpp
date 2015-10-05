@@ -35,7 +35,7 @@ void Terminate() {
 
 void InitializeWindow() {
 
-	//
+
 	if (!glfwInit()) {
 		Terminate();
 	}

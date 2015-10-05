@@ -1,4 +1,5 @@
 //put global includes in 'BasicIncludes'
+// hi
 
 #include "BasicIncludes.h"
 #include "rand.h"
@@ -21,7 +22,11 @@ GLFWwindow* mainThread;
 glm::uvec2 SCREEN_SIZE;
 Camera camera = Camera();
 glm::vec2 mouseChangeDegrees;
-float deltaTime;
+double deltaTime;
+
+
+std::vector<Object*> objects;
+
 
 void Terminate() {
 	glfwTerminate();
@@ -105,8 +110,8 @@ void InitializeWindow() {
 	// setup camera 
 	camera.setViewportAspectRatio(SCREEN_SIZE.x / (float)SCREEN_SIZE.y);
 
-	camera.setPosition(glm::vec3(-(METER* 5), METER * 5, -(METER * 5)));
-	camera.offsetOrientation(135, 45);
+	camera.setPosition(glm::vec3(0.0f, 0.0f, (METER)));
+	camera.offsetOrientation(0.0f, -45);
 
 	//unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
 	//threads = new ThreadPool(concurentThreadsSupported);
@@ -117,11 +122,13 @@ void InitializeWindow() {
 	SetInputWindow(mainThread);
 }
 
-Object testObj = Object();
-
 void Run() {
-
+		deltaTime = 1.0 / 60;
 		InitializeWindow();
+
+		Object testObj = Object();
+		objects.push_back(&testObj);
+
 		//timer info for loop
 		double t = 0.0f;
 		double currentTime = glfwGetTime();
@@ -180,6 +187,8 @@ void MouseInput() {
 	mouseChangeDegrees.x = (float)(xPos / SCREEN_SIZE.x *camera.fieldOfView().x);
 	mouseChangeDegrees.y = (float)(yPos / SCREEN_SIZE.y *camera.fieldOfView().y);
 
+	/*std::cout << "Change in x (mouse): " << mouseChangeDegrees.x << std::endl;
+	std::cout << "Change in y (mouse): " << mouseChangeDegrees.y << std::endl;*/
 
 	camera.offsetOrientation(mouseChangeDegrees.x, mouseChangeDegrees.y);
 
@@ -211,10 +220,10 @@ void CameraInput() {
 		camera.offsetPosition(float(moveSpeed) * camera.right());
 	}
 	if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
-		camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 1, 0));
+		camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 0, 1));
 	}
 	else if (glfwGetKey(mainThread, GLFW_KEY_X) == GLFW_PRESS) {
-		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 1, 0));
+		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 0, 1));
 	}
 }
 
@@ -222,7 +231,9 @@ void Update(double dt) {
 
 }
 void Draw() {
-	testObj.Draw(camera);
+	for (int i = 0; i < objects.size();i++){
+		objects[i]->Draw(camera);
+	}
 }
 int main(){
 

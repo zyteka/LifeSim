@@ -79,7 +79,7 @@
          @param rightAngle  the angle (in degrees) to offset rightwards. Negative values are leftwards.
          @param upAngle     the angle (in degrees) to offset upwards. Negative values are downwards.
          */
-        void offsetOrientation(float upAngle, float rightAngle);
+        void offsetOrientation(float rightAngle, float upAngle);
 
         /**
          The width divided by the height of the screen/window/viewport

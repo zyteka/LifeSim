@@ -6,7 +6,7 @@
 
 // a point representing data of a point in space
 typedef struct Vertex{
-	glm::dvec2 position; //d for double, i for int ect.
+	glm::vec3 position; //d for double, i for int ect.
 	glm::vec3 normal;
 	glm::vec3 color;
 	glm::vec2 uvCoord;

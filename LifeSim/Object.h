@@ -24,6 +24,7 @@ private:
 	//only use if the vertices are object space and not world space
 	glm::mat4 position;
 	GLuint cameraUniform;
+	GLuint posUniform;
 
 	shading::ShaderSupport* shader;
 	GLuint vao;

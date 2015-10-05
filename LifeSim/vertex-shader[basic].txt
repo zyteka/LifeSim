@@ -1,20 +1,21 @@
-﻿#version 440 core
+#version 420 core
 
-in vec2 vert_VS_in;
+in vec3 vert_VS_in;
 in vec3 normal_VS_in;
 in vec3 color_VS_in;
 
-out vec2 vert_FS_in;
+out vec3 vert_FS_in;
 out vec3 normal_FS_in;
 out vec3 color_FS_in;
 
 uniform mat4 camera;
+uniform mat4 position;
 
 void main()
 {
-	vert_VS_inN=vec4(vert_VS_in.x,vert_VS_in.y,0.0f,1.0f)
+	vec4 vert_VS_inNew = vec4(vert_VS_in.x,vert_VS_in.y,vert_VS_in.z,1.0f);
     vert_FS_in = vert_VS_in;
-	normal_FS_in = texCoord_VS_in;
-	color_FS_in = normal_VS_in;
-	gl_Position=camera*vert_VS_inN;
+	normal_FS_in = normal_VS_in;
+	color_FS_in = color_VS_in;
+	gl_Position=camera*position*vert_VS_inNew;
 }

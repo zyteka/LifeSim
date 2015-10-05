@@ -147,8 +147,14 @@
     <ClInclude Include="ShaderSupport.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="fragment-shader[basic].txt" />
-    <Text Include="vertex-shader[basic].txt" />
+    <Text Include="fragment-shader[basic].txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </Text>
+    <Text Include="vertex-shader[basic].txt">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

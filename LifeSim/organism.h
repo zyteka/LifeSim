@@ -1,12 +1,9 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
+#include "BasicIncludes.h"
 #include "rand.h"
+#include "Anatomy.h"
 
-
-//Remove this once Appendage class prototyped with header file
-//class Appendage;
 
 class Organism
 {
@@ -20,10 +17,10 @@ public:
 	std::string getName() const;
 
 	//Approximate "Species" of Organism by hashing its member variables
-	int getSpecies() const;
+	unsigned int getSpecies() const;
 
 	//Compare "Species" of 2 Organisms
-	int compareSpecies(Organism other) const;
+	bool compareSpecies(Organism other) const;
 
 	//Attempt to Eat
 	bool eat();
@@ -37,6 +34,9 @@ public:
 	//Attempt to Mutate Organism
 	bool mutate();
 
+	//Determine if Organism has enough energy for specified action
+	bool evalEnergy(float mult) const;
+
 private:
 
 	//Organism name
@@ -46,13 +46,13 @@ private:
 	unsigned long int id;
 
 	//Center of organism
-	int x, y, z;
+	float x, y, z;
 
 	//Organism's appendages
-	//std::vector<Appendage> appendages;
+	std::vector<Anatomy> appendages;
 
 	//Organism's Current Energy (Effected by food and sleep)
-	int energy;
+	unsigned int energy;
 
 };
 

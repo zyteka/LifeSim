@@ -4,7 +4,6 @@
 Object::Object()
 {
 	position = glm::mat4();
-	Load();
 
 }
 
@@ -31,21 +30,6 @@ void Object::Load(){
 	shader = LoadShaders("vertex-shader[basic].txt", "fragment-shader[basic].txt");
 	cameraUniform = shader->uniform("camera");
 	posUniform = shader->uniform("position");
-	
-
-	Vertex fill = { { 0.0f*METER, 0.0f,0.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
-	vertices.push_back(fill);
-	Vertex fill1 = { { 1.0f*METER, 0.0f, 1.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
-	vertices.push_back(fill1);
-	Vertex fill2 = { { 0.0f*METER, 0.0f, 1.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
-	vertices.push_back(fill2);
-	Vertex fill3 = { { 1.0f*METER, 0.0f, 0.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
-	vertices.push_back(fill3);
-
-	Index fill4 = { glm::uvec3(0, 2, 1) };
-	indices.push_back(fill4);
-	Index fill5 = { glm::uvec3(0, 1, 3) };
-	indices.push_back(fill5);
 
 
 	glGenVertexArrays(1, &vao);

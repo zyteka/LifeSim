@@ -1,4 +1,5 @@
 #include "Organism.h"
+#include "Metrics.h"
 
 //Constructor
 Organism::Organism()
@@ -34,7 +35,7 @@ std::string Organism::getName() const {
 
 //Approximate "Species" of Organism by hashing its member variables
 unsigned int Organism::getSpecies() const {
-	//Add hasing function here
+	//Add hashing function here
 
 	//unsigned int seed = 487159078;
 	unsigned int hashsum = 0;
@@ -49,13 +50,11 @@ unsigned int Organism::getSpecies() const {
 //Compare "Species" of 2 Organisms
 bool Organism::compareSpecies(Organism other) const {
 	unsigned int otherSpecies = other.getSpecies();
-
-	//Difference threshold within seperating "species"
-	unsigned int delta = 1000;
+	unsigned int Species = getSpecies();
 
 	//Add comparison of hash values here
-	if ((std::max(getSpecies(), otherSpecies) - 
-		std::min(getSpecies(), otherSpecies)) > delta) {
+	if ((std::max(Species, otherSpecies) - 
+		std::min(Species, otherSpecies)) > DELTA) {
 		return false;
 	}
 
@@ -103,8 +102,5 @@ bool Organism::evalEnergy(float mult) const {
 	//Note: Update this as function of getSpecies() later
 	float minEnergy = 150 * mult;
 
-	//Epsilon for floating point comparison
-	float epsilon = 0.0001;
-
-	return ((energy > minEnergy - epsilon) && energy > 0);
+	return ((energy > minEnergy - EPSILON) && energy > 0);
 }

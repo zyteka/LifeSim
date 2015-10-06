@@ -124,6 +124,9 @@ void InitializeWindow() {
 }
 
 void Run() {
+
+		SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
+
 		deltaTime = 1.0 / 60;
 		InitializeWindow();
 

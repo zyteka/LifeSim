@@ -111,7 +111,7 @@ void InitializeWindow() {
 	camera.setViewportAspectRatio(SCREEN_SIZE.x / (float)SCREEN_SIZE.y);
 
 	camera.setPosition(glm::vec3(0.0f, 0.0f, (METER)));
-	camera.offsetOrientation(0.0f, -45);
+	camera.offsetOrientation(0.0f, 45);
 
 	//unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
 	//threads = new ThreadPool(concurentThreadsSupported);
@@ -220,10 +220,10 @@ void CameraInput() {
 		camera.offsetPosition(float(moveSpeed) * camera.right());
 	}
 	if (glfwGetKey(mainThread, GLFW_KEY_Z) == GLFW_PRESS) {
-		camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 0, 1));
+		camera.offsetPosition(float(moveSpeed) * -glm::vec3(0, 1, 0));
 	}
 	else if (glfwGetKey(mainThread, GLFW_KEY_X) == GLFW_PRESS) {
-		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 0, 1));
+		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 1, 0));
 	}
 }
 

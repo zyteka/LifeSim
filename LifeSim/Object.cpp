@@ -33,13 +33,13 @@ void Object::Load(){
 	posUniform = shader->uniform("position");
 	
 
-	Vertex fill = { { 0.0f*METER, 0.0f*METER,0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
+	Vertex fill = { { 0.0f*METER, 0.0f,0.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
 	vertices.push_back(fill);
-	Vertex fill1 = { { 1.0f*METER, 1.0f*METER, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
+	Vertex fill1 = { { 1.0f*METER, 0.0f, 1.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
 	vertices.push_back(fill1);
-	Vertex fill2 = { { 0.0f*METER, 1.0f*METER, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
+	Vertex fill2 = { { 0.0f*METER, 0.0f, 1.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
 	vertices.push_back(fill2);
-	Vertex fill3 = { { 1.0f*METER, 0.0f*METER, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
+	Vertex fill3 = { { 1.0f*METER, 0.0f, 0.0f*METER }, { 0.0f, 0.0f, 1.0f }, { 0.5f, 0.5f, 0.0f } };
 	vertices.push_back(fill3);
 
 	Index fill4 = { glm::uvec3(0, 2, 1) };

@@ -5,8 +5,9 @@
 
 //example, you pick what you wish
 
-#define METER 0.1f
-#define DECIMETER 0.01f
+#define METER 1.0f
+#define KILOMETER 100.0f
+#define DECIMETER 0.1f
 
 //or
 //const float METER = 0.3f;

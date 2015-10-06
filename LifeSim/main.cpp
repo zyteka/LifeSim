@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Input.h"
 #include "Object.h"
+#include "Terrain.h"
 
 
 //Function List
@@ -126,8 +127,9 @@ void Run() {
 		deltaTime = 1.0 / 60;
 		InitializeWindow();
 
-		Object testObj = Object();
-		objects.push_back(&testObj);
+		Terrain testObj = Terrain();
+		Object* terrain = &testObj;
+		objects.push_back(terrain);
 
 		//timer info for loop
 		double t = 0.0f;

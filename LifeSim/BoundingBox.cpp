@@ -15,10 +15,41 @@ BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
 	Vertex fill3 = { { 0.5f*METER, -0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill3);
 
-	Index fill4 = { glm::uvec3(0, 2, 1) };
-	GetIndices().push_back(fill4);
-	Index fill5 = { glm::uvec3(0, 1, 3) };
-	GetIndices().push_back(fill5);
+	Vertex fill4 = { { -0.5f*METER, 0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill4);
+	Vertex fill5 = { { 0.5f*METER, 0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill5);
+	Vertex fill6 = { { -0.5f*METER, 0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill6);
+	Vertex fill7 = { { 0.5f*METER, 0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill7);
+
+	Index iFill1 = { glm::uvec3(0, 2, 1) };
+	GetIndices().push_back(iFill1);
+	Index iFill2 = { glm::uvec3(0, 1, 3) };
+	GetIndices().push_back(iFill2);
+	Index iFill3 = { glm::uvec3(4, 6, 5) };
+	GetIndices().push_back(iFill3);
+	Index iFill4 = { glm::uvec3(4, 5, 7) };
+	GetIndices().push_back(iFill4);
+	Index iFill5 = { glm::uvec3(0, 2, 6) };
+	GetIndices().push_back(iFill5);
+	Index iFill6 = { glm::uvec3(0, 6, 4) };
+	GetIndices().push_back(iFill6);
+	Index iFill7 = { glm::uvec3(1, 3, 7) };
+	GetIndices().push_back(iFill7);
+	Index iFill8 = { glm::uvec3(1, 7, 5) };
+	GetIndices().push_back(iFill8);
+
+	//TODO: fix the last 4 triangles
+	Index iFill9 = { glm::uvec3(2, 0, 4) };
+	GetIndices().push_back(iFill9);
+	Index iFill10 = { glm::uvec3(2, 4, 6) };
+	GetIndices().push_back(iFill10);
+	Index iFill11 = { glm::uvec3(3, 1, 5) };
+	GetIndices().push_back(iFill11);
+	Index iFill12 = { glm::uvec3(3, 5, 7) };
+	GetIndices().push_back(iFill12);
 
 
 	shape = new btBoxShape(btVector3(0.5f * METER, 0.5f * METER, 0.5f * METER));

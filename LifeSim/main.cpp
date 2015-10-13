@@ -145,7 +145,7 @@ void Run() {
 
 		// The world.
 		btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-		world->setGravity(btVector3(0, -9.82f, 0));
+		world->setGravity(btVector3(0, -9.82f*METER, 0));
 
 
 		Terrain testObj = Terrain(world);

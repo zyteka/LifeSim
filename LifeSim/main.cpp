@@ -130,6 +130,24 @@ void Run() {
 		deltaTime = 1.0 / 60;
 		InitializeWindow();
 
+
+		//Init values and objects
+
+		// Build the broadphase
+		btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+
+		// Set up the collision configuration and dispatcher
+		btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+		btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
+
+		// The actual physics solver
+		btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+
+		// The world.
+		btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+		dynamicsWorld->setGravity(btVector3(0, -10, 0));
+
+
 		Terrain testObj = Terrain();
 		Object* terrain = &testObj;
 		objects.push_back(terrain);
@@ -181,6 +199,16 @@ void Run() {
 
 			glfwSwapBuffers(mainThread);
 	}
+
+
+
+	//cleanup
+		delete dynamicsWorld;
+		delete solver;
+		delete dispatcher;
+		delete collisionConfiguration;
+		delete broadphase;
+
 }
 void MouseInput() {
 	double xPos;

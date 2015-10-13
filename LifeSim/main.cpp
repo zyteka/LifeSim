@@ -7,7 +7,7 @@
 #include "Input.h"
 #include "Object.h"
 #include "Terrain.h"
-
+#include "Anatomy.h"
 
 //Function List
 void Update(double);
@@ -111,8 +111,8 @@ void InitializeWindow() {
 	// setup camera 
 	camera.setViewportAspectRatio(SCREEN_SIZE.x / (float)SCREEN_SIZE.y);
 
-	camera.setPosition(glm::vec3(0.0f, METER, (METER)));
-	camera.offsetOrientation(45.0f, 45);
+	camera.setPosition(glm::vec3(-METER*50.0f, METER*50.0f, METER*50.0f));
+	camera.offsetOrientation(45.0f, 45.0f);
 
 	//unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
 	//threads = new ThreadPool(concurentThreadsSupported);
@@ -127,12 +127,36 @@ void Run() {
 
 		SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
 
-		deltaTime = 1.0 / 60;
+		deltaTime = 1.0 / 60.0;
 		InitializeWindow();
 
-		Terrain testObj = Terrain();
+
+		//Init values and objects
+
+		// Build the broadphase
+		btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+
+		// Set up the collision configuration and dispatcher
+		btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+		btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
+
+		// The actual physics solver
+		btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+
+		// The world.
+		btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+		world->setGravity(btVector3(0, -9.82f*METER, 0));
+
+
+		Terrain testObj = Terrain(world);
 		Object* terrain = &testObj;
 		objects.push_back(terrain);
+
+		Anatomy testOrg = Anatomy(world);
+		Object* testOrgP = &testOrg;
+		objects.push_back(testOrgP);
+
+
 
 		//timer info for loop
 		double t = 0.0f;
@@ -167,6 +191,8 @@ void Run() {
 				CameraInput(); //bypasses input system for direct camera manipulation
 				Update(deltaTime); //updates all objects based on the constant deltaTime.
 
+				world->stepSimulation(deltaTime, 10);
+
 				t += deltaTime;
 				accumulator -= deltaTime;
 			}
@@ -181,6 +207,16 @@ void Run() {
 
 			glfwSwapBuffers(mainThread);
 	}
+
+
+
+	//cleanup
+		delete world;
+		delete solver;
+		delete dispatcher;
+		delete collisionConfiguration;
+		delete broadphase;
+
 }
 void MouseInput() {
 	double xPos;
@@ -233,7 +269,9 @@ void CameraInput() {
 }
 
 void Update(double dt) {
-
+	for (int i = 0; i < objects.size(); i++){
+		objects[i]->Update();
+	}
 }
 void Draw() {
 	for (int i = 0; i < objects.size();i++){

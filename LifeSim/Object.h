@@ -11,18 +11,25 @@ public:
 	Object();
 	~Object();
 
-	void Draw(Camera&);
-	void Load();
+	virtual void Draw(Camera&);
+	virtual void Load();
+	virtual void Update();
 
 	std::vector<Index>& GetIndices();
 	std::vector<Vertex>& GetVertices();
+
+protected:
+	btDiscreteDynamicsWorld* world;
+	btCollisionShape* shape;
+	btRigidBody* rigidBody;
+	glm::mat4 position;
 private:
 	std::vector<Vertex> vertices;
 	std::vector<Index> indices;
 
 	//a matrix defining rotation, translation, and scaling of the object
 	//only use if the vertices are object space and not world space
-	glm::mat4 position;
+	
 	GLuint cameraUniform;
 	GLuint posUniform;
 
@@ -30,5 +37,7 @@ private:
 	GLuint vao;
 	GLuint vbo;
 	GLuint ibo;
+
+	
 };
 

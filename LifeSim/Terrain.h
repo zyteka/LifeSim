@@ -4,7 +4,7 @@
 class Terrain : public Object
 {
 public:
-	Terrain();
+	Terrain(btDiscreteDynamicsWorld*);
 	~Terrain();
 };
 

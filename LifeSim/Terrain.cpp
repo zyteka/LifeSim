@@ -1,8 +1,9 @@
 #include "Terrain.h"
 
 
-Terrain::Terrain()
+Terrain::Terrain(btDiscreteDynamicsWorld* worldN)
 {
+	world = worldN;
 
 	Vertex fill = { { -1.0f*KILOMETER, 0.0f, -1.0f*KILOMETER }, { 0.0f, 0.0f, 1.0f }, { 0.9f, 0.9f, 0.9f } };
 	GetVertices().push_back(fill);
@@ -17,6 +18,16 @@ Terrain::Terrain()
 	GetIndices().push_back(fill4);
 	Index fill5 = { glm::uvec3(0, 1, 3) };
 	GetIndices().push_back(fill5);
+
+
+
+	shape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+
+	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+	btRigidBody::btRigidBodyConstructionInfo
+		groundRigidBodyCI(0, groundMotionState, shape, btVector3(0, 0, 0));
+	rigidBody = new btRigidBody(groundRigidBodyCI);
+	world->addRigidBody(rigidBody);
 
 
 	Load(); //loads drawing related stuff. Call after vertices/indices have been defined

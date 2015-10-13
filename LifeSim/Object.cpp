@@ -4,7 +4,6 @@
 Object::Object()
 {
 	position = glm::mat4();
-
 }
 
 
@@ -14,17 +13,17 @@ Object::~Object()
 
 void Object::Draw(Camera& camera)
 {
-	
-	shader->use();
-	glBindVertexArray(vao);
-	shader->setUniform(cameraUniform, camera.matrix());
-	//shader->setUniform(cameraUniform, glm::ortho(0.0f, 1.0f*METER, 0.0f, 1.0f*METER, 2.0f*METER, -2.0f*METER));//camera.matrix() otherwise
-	shader->setUniform(posUniform, position);
-	glDrawElements(GL_TRIANGLES, (indices.size()*3), GL_UNSIGNED_INT, (GLvoid*)0);
-	glBindVertexArray(0);
-	shader->stopUsing();
-
-
+	if (shader == NULL){
+		std::cout << "Forgot to call Load()" << std::endl;
+	}
+		shader->use();
+		glBindVertexArray(vao);
+		shader->setUniform(cameraUniform, camera.matrix());
+		//shader->setUniform(cameraUniform, glm::ortho(0.0f, 1.0f*METER, 0.0f, 1.0f*METER, 2.0f*METER, -2.0f*METER));//camera.matrix() otherwise
+		shader->setUniform(posUniform, position);
+		glDrawElements(GL_TRIANGLES, (indices.size() * 3), GL_UNSIGNED_INT, (GLvoid*)0);
+		glBindVertexArray(0);
+		shader->stopUsing();
 }
 void Object::Load(){
 	shader = LoadShaders("vertex-shader[basic].txt", "fragment-shader[basic].txt");
@@ -53,6 +52,9 @@ void Object::Load(){
 	glBindVertexArray(0);
 }
 
+void Object::Update(){
+	position = glm::mat4();
+}
 std::vector<Index>& Object::GetIndices(){
 	return indices;
 }

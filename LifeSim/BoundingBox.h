@@ -1,14 +1,16 @@
 #pragma once
 
-#include "BasicIncludes.h"
 #include "Object.h"
 
 class BoundingBox : public Object
 {
 public:
-	BoundingBox();
+	BoundingBox(btDiscreteDynamicsWorld*);
 	BoundingBox(int l, BoundingBox *p);
 	~BoundingBox();
+
+
+	void Update();
 
 	BoundingBox* getParent();
 	std::list<BoundingBox> getChildren();

@@ -1,10 +1,47 @@
 #include "BoundingBox.h"
-#include <list>
 
-BoundingBox::BoundingBox()
+BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
 {
+	world = worldN;
 	layer = 0;
 	parent = NULL;
+
+	Vertex fill = { { -0.5f*METER, -0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill);
+	Vertex fill1 = { { 0.5f*METER, -0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill1);
+	Vertex fill2 = { { -0.5f*METER, -0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill2);
+	Vertex fill3 = { { 0.5f*METER, -0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	GetVertices().push_back(fill3);
+
+	Index fill4 = { glm::uvec3(0, 2, 1) };
+	GetIndices().push_back(fill4);
+	Index fill5 = { glm::uvec3(0, 1, 3) };
+	GetIndices().push_back(fill5);
+
+
+	shape = new btBoxShape(btVector3(0.5f * METER, 0.5f * METER, 0.5f * METER));
+
+	btDefaultMotionState* fallMotionState =
+		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50*METER, 0)));
+	btScalar mass = 1;
+	btVector3 fallInertia(0, 0, 0);
+	shape->calculateLocalInertia(mass, fallInertia);
+	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, shape, fallInertia);
+	rigidBody = new btRigidBody(fallRigidBodyCI);
+	world->addRigidBody(rigidBody);
+
+	
+
+	Load();
+}
+
+
+void BoundingBox::Update(){
+	btTransform trans;
+	rigidBody->getMotionState()->getWorldTransform(trans);
+	trans.getOpenGLMatrix(glm::value_ptr(position));
 }
 
 BoundingBox::BoundingBox(int l, BoundingBox *p)

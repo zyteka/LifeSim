@@ -7,7 +7,7 @@
 
 #define METER 0.1f
 #define KILOMETER 100.0f
-#define DECIMETER 0.1f
+#define DECIMETER 0.01f
 
 //Error tolerance for floating point calcualtions
 #define EPSILON 0.000001f

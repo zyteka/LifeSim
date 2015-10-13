@@ -15,6 +15,7 @@
 //Difference threshold within seperating "species"
 #define DELTA 1000
 
+//Time Metrics
 #define HOUR 0.0416f
 #define DAY 1.0f
 #define WEEK 7.0f

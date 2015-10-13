@@ -96,6 +96,7 @@ bool Organism::mutate() {
 }
 
 //Determine if Organism has enough energy for specified action
+//Assumes mult > 0
 bool Organism::evalEnergy(float mult) const {
 
 	//Minimum required energy to execute action

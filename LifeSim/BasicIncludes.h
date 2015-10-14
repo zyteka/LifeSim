@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <math.h>
 #include <cmath>
+#include <algorithm>
 #include "Metrics.h"
 #include "GlobalStructures.h"
 #include <functional>

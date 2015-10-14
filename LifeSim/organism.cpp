@@ -21,6 +21,11 @@ Organism::Organism()
 	for (int i = 0; i < lNameLen; ++i) {
 		lName += static_cast<char>(GetDistribution(std::uniform_int_distribution<int>(65, 90)));
 	}
+
+	asleep = false;
+	asleepSince = -1.0;
+
+	energy = GetDistribution(std::normal_distribution<int>(0, maxEnergy()));
 }
 
 //Destructor
@@ -63,24 +68,59 @@ bool Organism::compareSpecies(Organism other) const {
 	}
 }
 
-bool Organism::eat()
-{
+//Attempt to eat given resource
+//Note: Add ersource parameter to function
+bool Organism::eat() {
+	//Determine if Organism has enough energy to digest food
+	//Note: May want to change this multiplier to be variable 
+	//based on the Anatomy of the Organism
+	if (!evalEnergy(0.03)) return false;
+
+
 	return false;
 }
 
-bool Organism::sleep()
-{
-	return false;
+//Attempt to Sleep
+bool Organism::sleep(float curTime) {
+	//Organism is already asleep
+	if (asleep) return false;
+	
+	//Organism is well rested, so sleep is unnecessary
+	if (energy > maxEnergy() / 2) return false;
+
+	asleepSince = curTime;
+	asleep = true;
+
+	return true;
+}
+
+//Attempt to Awaken from Sleep
+bool Organism::wakeUp(float curTime) {
+	//Organism is Already Awake
+	if (!asleep) return false;
+
+	//Organism has not yet rested enough
+	if (energy < 9 * maxEnergy() / 10) return false;
+
+	//Note: Tweak Sleep Energy Gain multiplier
+	energy += (curTime - asleepSince) * 0.05;
+
+	//Adjust energy to maximum energy for Organism
+	energy = std::max(energy, maxEnergy());
+
+	asleep = false;
+	asleepSince = -1.0;
+
+	return true;
 }
 
 //Attempt to reproduce with another Organism
-bool Organism::reproduce(Organism other)
-{
+bool Organism::reproduce(Organism other) {
 	if (!compareSpecies(other)) {
 		return false;
 	}
 
-	if (!evalEnergy(1)) {
+	if (!evalEnergy(0.85)) {
 		return false;
 	}
 
@@ -104,4 +144,10 @@ bool Organism::evalEnergy(float mult) const {
 	float minEnergy = 150 * mult;
 
 	return ((energy > minEnergy - EPSILON) && energy > 0);
+}
+
+//Maximum Energy the Organism may store
+unsigned int Organism::maxEnergy() const {
+	//Note: may want to update/tweak this in the future (add multiplier)
+	return getSpecies();
 }

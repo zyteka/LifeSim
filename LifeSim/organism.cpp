@@ -25,7 +25,7 @@ Organism::Organism()
 	asleep = false;
 	asleepSince = -1.0;
 
-	energy = GetDistribution(std::normal_distribution<int>(0, maxEnergy()));
+	energy = GetDistribution(std::normal_distribution<float>(maxEnergy() / 2, maxEnergy() / 10));
 }
 
 //Destructor

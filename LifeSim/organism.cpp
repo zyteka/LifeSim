@@ -15,17 +15,20 @@ Organism::Organism()
 
 	//Generate name
 	for (int i = 0; i < fNameLen; ++i) {
-		fName += static_cast<char>(GetDistribution(std::uniform_int_distribution<int>(65, 90)));
+		fName += static_cast<char>(GetDistribution( std::uniform_int_distribution<int>(65, 90) ));
 	}
 
 	for (int i = 0; i < lNameLen; ++i) {
-		lName += static_cast<char>(GetDistribution(std::uniform_int_distribution<int>(65, 90)));
+		lName += static_cast<char>(GetDistribution( std::uniform_int_distribution<int>(65, 90) ));
 	}
 
 	asleep = false;
 	asleepSince = -1.0;
 
 	energy = GetDistribution(std::normal_distribution<float>(maxEnergy() / 2, maxEnergy() / 10));
+
+	//In case above energy distribution does not work out
+	//energy = GetDistribution(std::uniform_int_distribution<int>(0, maxEnergy() ));
 }
 
 //Destructor

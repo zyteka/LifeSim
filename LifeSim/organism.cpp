@@ -22,10 +22,12 @@ Organism::Organism()
 		lName += static_cast<char>(GetDistribution( std::uniform_int_distribution<int>(65, 90) ));
 	}
 
+	//Organism is not asleep at creation
 	asleep = false;
 	asleepSince = -1.0;
 
-	energy = GetDistribution(std::normal_distribution<float>(maxEnergy() / 2, maxEnergy() / 10));
+	//Organisms begin with energy normally distributed around 50% of their maximum
+	energy = std::max(unsigned int(GetDistribution(std::normal_distribution<float>(maxEnergy() / 2, maxEnergy() / 10))), maxEnergy());
 
 	//In case above energy distribution does not work out
 	//energy = GetDistribution(std::uniform_int_distribution<int>(0, maxEnergy() ));
@@ -50,6 +52,11 @@ unsigned int Organism::getSpecies() const {
 
 	for (unsigned int i = 0; i < appendages.size(); ++i) {
 		hashsum += static_cast<unsigned int>(appendages[i]);
+
+		//Alternate casting option: Reinterpret
+		//const void * p = &appendages[i];
+		//const unsigned int * q = static_cast<const unsigned int *>(p);
+		//hashsum += *q;
 	}
 
 	return 0;
@@ -119,10 +126,12 @@ bool Organism::wakeUp(float curTime) {
 
 //Attempt to reproduce with another Organism
 bool Organism::reproduce(Organism other) {
+	//Organisms of different species cannot reproduce
 	if (!compareSpecies(other)) {
 		return false;
 	}
 
+	//Organism needs enough energy to reproduce
 	if (!evalEnergy(0.85)) {
 		return false;
 	}

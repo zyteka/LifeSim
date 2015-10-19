@@ -127,6 +127,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="Perlin.cpp" />
     <ClCompile Include="Rand.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderSupport.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Metrics.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Organism.h" />
+    <ClInclude Include="Perlin.h" />
     <ClInclude Include="Rand.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderSupport.h" />

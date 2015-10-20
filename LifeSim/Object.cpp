@@ -26,7 +26,7 @@ void Object::Draw(Camera& camera)
 		shader->stopUsing();
 }
 void Object::Load(){
-	shader = LoadShaders("vertex-shader[basic].txt", "fragment-shader[basic].txt");
+	shader = LoadShaders("vertex-shader[basic].txt", "geometry-shader[basic].txt","fragment-shader[basic].txt");
 	cameraUniform = shader->uniform("camera");
 	posUniform = shader->uniform("position");
 
@@ -40,10 +40,8 @@ void Object::Load(){
 
 	glEnableVertexAttribArray(shader->attrib("vert_VS_in"));
 	glVertexAttribPointer(shader->attrib("vert_VS_in"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
-	glEnableVertexAttribArray(shader->attrib("normal_VS_in"));
-	glVertexAttribPointer(shader->attrib("normal_VS_in"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(shader->attrib("color_VS_in"));
-	glVertexAttribPointer(shader->attrib("color_VS_in"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(6 * sizeof(GLfloat)));
+	glVertexAttribPointer(shader->attrib("color_VS_in"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(3 * sizeof(GLfloat)));
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);

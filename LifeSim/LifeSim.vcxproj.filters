@@ -118,5 +118,8 @@
     <Text Include="fragment-shader[basic].txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="geometry-shader[basic].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

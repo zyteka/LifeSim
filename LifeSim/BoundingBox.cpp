@@ -67,7 +67,7 @@ BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
 }
 
 
-void BoundingBox::Update(){
+void BoundingBox::Update(){ 
 	btTransform trans;
 	rigidBody->getMotionState()->getWorldTransform(trans);
 	trans.getOpenGLMatrix(glm::value_ptr(position));

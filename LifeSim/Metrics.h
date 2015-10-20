@@ -21,6 +21,7 @@
 #define WEEK 7.0f
 #define MONTH 31.0f
 
+#define NEWTONS 10.0f
 // mass metrics
 
 #define GRAM 0.001f

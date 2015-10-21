@@ -16,12 +16,6 @@ public:
 	//Get Organism's name
 	std::string getName() const;
 
-	//Approximate "Species" of Organism by hashing its member variables
-	unsigned int getSpecies() const;
-
-	//Compare "Species" of 2 Organisms
-	bool compareSpecies(Organism other) const;
-
 	//Attempt to Eat given resource
 	//Note Add resource parameter to function
 	bool eat();
@@ -38,13 +32,36 @@ public:
 	//Attempt to Mutate Organism
 	bool mutate();
 
+	//Stores the Organism's Current Priorities
+	//std::list<std::function<bool(boost::any)> > priorities;
+
+	//Age of the Organism
+	float age;
+
+	
+
+private:
+
+	//Private Functions
+
+	//Approximate "Species" of Organism by hashing its member variables
+	unsigned int getSpecies() const;
+
+	//Compare "Species" of 2 Organisms
+	bool compareSpecies(Organism other) const;
+
 	//Determine if Organism has enough energy for specified action
 	bool evalEnergy(float mult) const;
 
 	//Maximum Energy the Organism may store
 	unsigned int maxEnergy() const;
 
-private:
+
+	//================================================================
+	//================================================================
+
+
+	//Member Variables
 
 	//Organism name
 	std::string fName, lName;
@@ -66,6 +83,12 @@ private:
 
 	//Time the organism went to sleep (0 if awake)
 	float asleepSince;
+
+	/*struct priority {
+		bool operator() {}
+	};*/
+
+
 
 };
 

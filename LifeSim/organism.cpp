@@ -31,6 +31,8 @@ Organism::Organism()
 
 	//In case above energy distribution does not work out
 	//energy = GetDistribution(std::uniform_int_distribution<int>(0, maxEnergy() ));
+
+	age = 0.0;
 }
 
 //Destructor

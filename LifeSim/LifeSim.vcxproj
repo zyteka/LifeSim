@@ -147,6 +147,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderSupport.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Typedefs.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="fragment-shader[basic].txt">

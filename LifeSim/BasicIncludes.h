@@ -12,13 +12,17 @@
 #include <list>
 #include <queue> 
 #include <map>
+#include <set>
 #include <cstdlib>
 #include <cassert>
 #include <stdexcept>
 #include <math.h>
 #include <cmath>
 #include <algorithm>
+#include <functional>
 #include "Metrics.h"
 #include "GlobalStructures.h"
 #include <functional>
 #include "btBulletDynamicsCommon.h"
+//#include "PriorityQueue.h"
+#include "Typedefs.h"

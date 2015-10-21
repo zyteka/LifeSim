@@ -111,8 +111,8 @@ void InitializeWindow() {
 	// setup camera 
 	camera.setViewportAspectRatio(SCREEN_SIZE.x / (float)SCREEN_SIZE.y);
 
-	camera.setPosition(glm::vec3(-METER*50.0f, METER*50.0f, METER*50.0f));
-	camera.offsetOrientation(45.0f, 45.0f);
+	camera.setPosition(glm::vec3(-METER*25.0f, METER*25.0f, METER*25.0f));
+	camera.offsetOrientation(45.0f, 10.0f);
 
 	//unsigned concurentThreadsSupported = std::thread::hardware_concurrency();
 	//threads = new ThreadPool(concurentThreadsSupported);

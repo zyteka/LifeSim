@@ -6,27 +6,27 @@ BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
 	layer = 0;
 	parent = NULL;
 
-	Vertex fill = { { -0.5f*METER, -0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill = { { -0.5f*METER, -0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill);
-	Vertex fill1 = { { 0.5f*METER, -0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill1 = { { 0.5f*METER, -0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill1);
-	Vertex fill2 = { { -0.5f*METER, -0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill2 = { { -0.5f*METER, -0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill2);
-	Vertex fill3 = { { 0.5f*METER, -0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill3 = { { 0.5f*METER, -0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill3);
 
-	Vertex fill4 = { { -0.5f*METER, 0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill4 = { { -0.5f*METER, 0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill4);
-	Vertex fill5 = { { 0.5f*METER, 0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill5 = { { 0.5f*METER, 0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill5);
-	Vertex fill6 = { { -0.5f*METER, 0.5f*METER, 0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill6 = { { -0.5f*METER, 0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill6);
-	Vertex fill7 = { { 0.5f*METER, 0.5f*METER, -0.5f*METER }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill7 = { { 0.5f*METER, 0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill7);
 
-	Index iFill1 = { glm::uvec3(0, 2, 1) };
+	Index iFill1 = { glm::uvec3(0, 1, 2) };
 	GetIndices().push_back(iFill1);
-	Index iFill2 = { glm::uvec3(0, 1, 3) };
+	Index iFill2 = { glm::uvec3(0, 3, 1) };
 	GetIndices().push_back(iFill2);
 	Index iFill3 = { glm::uvec3(4, 6, 5) };
 	GetIndices().push_back(iFill3);
@@ -40,15 +40,13 @@ BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
 	GetIndices().push_back(iFill7);
 	Index iFill8 = { glm::uvec3(1, 7, 5) };
 	GetIndices().push_back(iFill8);
-
-	//TODO: fix the last 4 triangles
-	Index iFill9 = { glm::uvec3(2, 0, 4) };
+	Index iFill9 = { glm::uvec3(0, 4, 7) };
 	GetIndices().push_back(iFill9);
-	Index iFill10 = { glm::uvec3(2, 4, 6) };
+	Index iFill10 = { glm::uvec3(0, 7, 3) };
 	GetIndices().push_back(iFill10);
-	Index iFill11 = { glm::uvec3(3, 1, 5) };
+	Index iFill11 = { glm::uvec3(1, 5, 6) };
 	GetIndices().push_back(iFill11);
-	Index iFill12 = { glm::uvec3(3, 5, 7) };
+	Index iFill12 = { glm::uvec3(1, 6, 2) };
 	GetIndices().push_back(iFill12);
 
 
@@ -69,7 +67,7 @@ BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
 }
 
 
-void BoundingBox::Update(){
+void BoundingBox::Update(){ 
 	btTransform trans;
 	rigidBody->getMotionState()->getWorldTransform(trans);
 	trans.getOpenGLMatrix(glm::value_ptr(position));

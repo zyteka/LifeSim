@@ -60,6 +60,9 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Perlin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicIncludes.h">
@@ -104,6 +107,9 @@
     <ClInclude Include="Terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Perlin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Typedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -113,6 +119,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="fragment-shader[basic].txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="geometry-shader[basic].txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

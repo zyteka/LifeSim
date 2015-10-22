@@ -167,6 +167,8 @@ void Run() {
 		glfwSetCursorPos(mainThread, SCREEN_SIZE.x / 2.0f, SCREEN_SIZE.y / 2.0f);
 
 
+		//THIS IS TO SPEED UP TIME
+		float timeMod = 1.0f;
 
 		while (!glfwWindowShouldClose(mainThread)) {
 			double newTime = glfwGetTime();
@@ -191,7 +193,7 @@ void Run() {
 				CameraInput(); //bypasses input system for direct camera manipulation
 				Update(deltaTime); //updates all objects based on the constant deltaTime.
 
-				world->stepSimulation(deltaTime, 10);
+				world->stepSimulation(deltaTime, 10*timeMod);
 
 				t += deltaTime;
 				accumulator -= deltaTime;

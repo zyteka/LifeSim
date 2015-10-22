@@ -1,7 +1,8 @@
 #pragma once
 
 #include "BasicIncludes.h"
-#include "BoundingBox.h"
+#include "Bone.h"
+#include "Joint.h"
 
 class Anatomy : public Object
 {
@@ -16,7 +17,7 @@ public:
 	operator unsigned int() const;
 	
 private:
-	BoundingBox* mainPart;
-
+	std::set<Bone*> bones;
+	std::set<Joint*> joints;
 };
 

@@ -5,23 +5,17 @@
 class BoundingBox : public Object
 {
 public:
-	BoundingBox(btDiscreteDynamicsWorld*);
-	BoundingBox(int l, BoundingBox *p);
+	BoundingBox(btDiscreteDynamicsWorld*,glm::vec3,glm::vec3);
 	~BoundingBox();
 
 
 	void Update();
 
-	BoundingBox* getParent();
-	std::list<BoundingBox> getChildren();
-	uint numChildren();
-	int getLayer();
-	bool addChild(BoundingBox b);
+
+	glm::mat4 GetPosition();
+	void SetPosition(glm::vec3);
 
 private:
-	BoundingBox *parent;
-	std::list<BoundingBox> children;
-	int layer;
 
 };
 

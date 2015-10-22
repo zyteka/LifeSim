@@ -1,27 +1,25 @@
 #include "BoundingBox.h"
 
-BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
+BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN,glm::vec3 pos,glm::vec3 size)
 {
 	world = worldN;
-	layer = 0;
-	parent = NULL;
 
-	Vertex fill = { { -0.5f*METER, -0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill = { { -size.x / 2.0f, -size.y / 2.0f, -size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill);
-	Vertex fill1 = { { 0.5f*METER, -0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill1 = { { size.x / 2.0f, -size.y / 2.0f, size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill1);
-	Vertex fill2 = { { -0.5f*METER, -0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill2 = { { -size.x / 2.0f, -size.y / 2.0f, size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill2);
-	Vertex fill3 = { { 0.5f*METER, -0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill3 = { { size.x / 2.0f, -size.y / 2.0f, -size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill3);
 
-	Vertex fill4 = { { -0.5f*METER, 0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill4 = { { -size.x / 2.0f, size.y / 2.0f, -size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill4);
-	Vertex fill5 = { { 0.5f*METER, 0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill5 = { { size.x / 2.0f, size.y / 2.0f, size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill5);
-	Vertex fill6 = { { -0.5f*METER, 0.5f*METER, 0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill6 = { { -size.x / 2.0f, size.y / 2.0f, size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill6);
-	Vertex fill7 = { { 0.5f*METER, 0.5f*METER, -0.5f*METER }, { 1.0f, 0.0f, 0.0f } };
+	Vertex fill7 = { { size.x / 2.0f, size.y / 2.0f, -size.z / 2.0f }, { 1.0f, 0.0f, 0.0f } };
 	GetVertices().push_back(fill7);
 
 	Index iFill1 = { glm::uvec3(0, 1, 2) };
@@ -50,10 +48,10 @@ BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN)
 	GetIndices().push_back(iFill12);
 
 
-	shape = new btBoxShape(btVector3(0.5f * METER, 0.5f * METER, 0.5f * METER));
+	shape = new btBoxShape(btVector3(size.x / 2.0f, size.y / 2.0f, size.z / 2.0f));
 
 	btDefaultMotionState* fallMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50*METER, 0)));
+		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(pos.x, pos.y, pos.z)));
 	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);
 	shape->calculateLocalInertia(mass, fallInertia);
@@ -73,38 +71,10 @@ void BoundingBox::Update(){
 	trans.getOpenGLMatrix(glm::value_ptr(position));
 }
 
-BoundingBox::BoundingBox(int l, BoundingBox *p)
-{
-	layer = l;
-	parent = p;
-}
-
-
 BoundingBox::~BoundingBox()
 {
 }
 
-BoundingBox* BoundingBox::getParent() {
-	return parent;
-}
-
-std::list<BoundingBox> BoundingBox::getChildren() {
-	return children;
-}
-
-int BoundingBox::getLayer() {
-	return layer;
-}
-
-uint BoundingBox::numChildren() {
-	return uint(children.size());
-}
-
-bool BoundingBox::addChild(BoundingBox b) {
-	if ((b.getLayer() <= layer + 1) && b.getLayer() >= layer - 1) {
-		children.push_back(b);
-		return true;
-	}
-	else
-		return false;
+glm::mat4 BoundingBox::GetPosition(){
+	return position;
 }

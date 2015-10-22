@@ -12,7 +12,7 @@ Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN){
 	glm::vec3 pos2 = glm::vec3(0.0f, 0.0f, 2.0f)*METER;
 	glm::vec3 pos3 = glm::vec3(0.0f, 0.0f, 4.0f)*METER; 
 
-	glm::vec3 boneSize = glm::vec3(0.75f*METER, 0.75f*METER, pos2.z - pos1.z);
+	glm::vec3 boneSize = glm::vec3(0.75f*METER, 0.75f*METER, pos3.z - pos2.z);
 
 	glm::vec3 bonePosition = (pos1 + pos2) / 2.0f;
 	glm::vec3 bonePosition1 = (pos3 + pos2) / 2.0f;

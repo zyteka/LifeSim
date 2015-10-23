@@ -58,7 +58,7 @@ void InitializeWindow() {
 	//set screen size
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-	SCREEN_SIZE = glm::uvec2(720,720);
+	SCREEN_SIZE = glm::uvec2(1280,720);
 
 	//basic aa done for us ;D
 	glfwWindowHint(GLFW_SAMPLES, 16);

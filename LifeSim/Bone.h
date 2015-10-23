@@ -5,19 +5,17 @@
 
 class Joint;
 
-class Bone
+class Bone : public Object
 {
 public:
 	Bone(btDiscreteDynamicsWorld*,Joint *,Joint*,glm::vec3,glm::vec3);
 	~Bone();
 
-	void Load();
-	void Draw(Camera& camera);
-	void Update();
+	glm::vec3 GetPosition();
 private:
+
 	Joint* endLeft;
 	Joint* endRight;
 
-	BoundingBox* bodyPart;
 };
 

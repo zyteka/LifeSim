@@ -9,10 +9,9 @@ public:
 	~BoundingBox();
 
 
-	void Update();
-
-
 	glm::mat4 GetPosition();
+	btRigidBody* GetRigidBody();
+
 	void SetPosition(glm::vec3);
 
 private:

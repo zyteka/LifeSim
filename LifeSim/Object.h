@@ -14,6 +14,8 @@ public:
 	virtual void Draw(Camera&);
 	virtual void Load();
 	virtual void Update();
+	btRigidBody* GetRigidBody();
+	glm::vec3 GetPosition();
 
 	std::vector<Index>& GetIndices();
 	std::vector<Vertex>& GetVertices();

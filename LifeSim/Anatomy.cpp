@@ -8,33 +8,27 @@ Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN){
 	
 	glm::vec3 jointSize=glm::vec3(0.5f)*METER;
 
-	glm::vec3 pos1 = glm::vec3(0.0f, 0.0f, 0.0f)*METER;
-	glm::vec3 pos2 = glm::vec3(0.0f, 0.0f, 2.0f)*METER;
-	glm::vec3 pos3 = glm::vec3(0.0f, 0.0f, 4.0f)*METER; 
+	glm::vec3 pos1 = glm::vec3(0.0f, 0.5f, -2.0f)*METER;
+	glm::vec3 pos2 = glm::vec3(0.0f, 0.5f, 0.0f)*METER;
+	glm::vec3 pos3 = glm::vec3(0.0f, 0.5f, 2.0f)*METER; 
 
-	glm::vec3 boneSize = glm::vec3(0.75f*METER, 0.75f*METER, pos3.z - pos2.z);
+	glm::vec3 boneSize = glm::vec3(0.75f*METER, 0.75f*METER, pos3.z - pos2.z - jointSize.x);
 
 	glm::vec3 bonePosition = (pos1 + pos2) / 2.0f;
 	glm::vec3 bonePosition1 = (pos3 + pos2) / 2.0f;
 
-	Joint* joint1 = new Joint(world, pos1, jointSize);
 	Joint* joint2 = new Joint(world, pos2, jointSize);
-	Joint* joint3 = new Joint(world,pos3,jointSize);
 
-	Bone* bone1 = new Bone(worldN, joint1, joint2,bonePosition,boneSize);
-	Bone* bone2 = new Bone(worldN, joint2, joint3, bonePosition1, boneSize);
+	Bone* bone1 = new Bone(worldN, NULL, joint2, bonePosition, boneSize);
+	Bone* bone2 = new Bone(worldN, joint2, NULL, bonePosition1, boneSize);
 
 	bones.insert(bone1);
-	joint1->AddBone(bone1);
 	joint2->AddBone(bone1);
 
 	bones.insert(bone2);
-	joint3->AddBone(bone2);
 	joint2->AddBone(bone2);
 
-	joints.insert(joint1);
 	joints.insert(joint2);
-	joints.insert(joint3);
 }
 
 Anatomy::~Anatomy(){

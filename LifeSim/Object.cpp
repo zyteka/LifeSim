@@ -51,11 +51,19 @@ void Object::Load(){
 }
 
 void Object::Update(){
-	position = glm::mat4();
+	btTransform trans;
+	rigidBody->getMotionState()->getWorldTransform(trans);
+	trans.getOpenGLMatrix(glm::value_ptr(position));
 }
 std::vector<Index>& Object::GetIndices(){
 	return indices;
 }
 std::vector<Vertex>& Object::GetVertices(){
 	return vertices;
+}
+btRigidBody* Object::GetRigidBody(){
+	return rigidBody;
+}
+glm::vec3 Object::GetPosition(){
+	return glm::vec3(position[3]);
 }

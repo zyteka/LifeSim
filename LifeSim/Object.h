@@ -17,10 +17,13 @@ public:
 	btRigidBody* GetRigidBody();
 	glm::vec3 GetPosition();
 
+	virtual void UpdatePosition();
+
 	std::vector<Index>& GetIndices();
 	std::vector<Vertex>& GetVertices();
 
 protected:
+	bool isStatic;
 	btDiscreteDynamicsWorld* world;
 	btCollisionShape* shape;
 	btRigidBody* rigidBody;

@@ -3,7 +3,9 @@
 
 Terrain::Terrain(btDiscreteDynamicsWorld* worldN)
 {
+	isStatic=true;
 	world = worldN;
+	position = glm::mat4();
 
 	Vertex fill = { { -1.0f*KILOMETER, 0.0f, -1.0f*KILOMETER }, { 0.9f, 0.9f, 0.9f } };
 	GetVertices().push_back(fill);
@@ -21,14 +23,7 @@ Terrain::Terrain(btDiscreteDynamicsWorld* worldN)
 
 
 
-	shape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-
-	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-	btRigidBody::btRigidBodyConstructionInfo
-		groundRigidBodyCI(0, groundMotionState, shape, btVector3(0, 0, 0));
-	rigidBody = new btRigidBody(groundRigidBodyCI);
-	world->addRigidBody(rigidBody);
-
+	shape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
 	Load(); //loads drawing related stuff. Call after vertices/indices have been defined
 }

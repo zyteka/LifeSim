@@ -9,14 +9,14 @@ class Bone;
 class Joint : public Object
 {
 public:
-	Joint(btDiscreteDynamicsWorld*,glm::vec3,glm::vec3);
+	Joint(btDiscreteDynamicsWorld*,glm::vec3,float);
 	~Joint();
 
 	void Update();
 
 	void AddBone(Bone*);
 private:
-	glm::vec3 boxSize;
+	float radius;
 	std::set<Bone*> bones;
 };
 

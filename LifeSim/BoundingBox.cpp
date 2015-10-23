@@ -30,15 +30,6 @@ BoundingBox::BoundingBox(btDiscreteDynamicsWorld* worldN,glm::vec3 pos,glm::vec3
 
 	shape = new btBoxShape(btVector3(size.x / 2.0f, size.y / 2.0f, size.z / 2.0f));
 
-	btDefaultMotionState* fallMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(pos.x, pos.y, pos.z)));
-	btScalar mass = 1;
-	btVector3 fallInertia(0, 0, 0);
-	shape->calculateLocalInertia(mass, fallInertia);
-	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, shape, fallInertia);
-	rigidBody = new btRigidBody(fallRigidBodyCI);
-	world->addRigidBody(rigidBody);
-
 	Load();
 }
 

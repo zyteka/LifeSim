@@ -1,12 +1,13 @@
 #include "Joint.h"
 #include "Bone.h"
 
-Joint::Joint(btDiscreteDynamicsWorld* worldN,glm::vec3 posIn,glm::vec3 bboxSize)
+Joint::Joint(btDiscreteDynamicsWorld* worldN, glm::vec3 posIn, float radiusN)
 {
-
+	isStatic = false;
 	world = worldN;
-	boxSize = bboxSize;
-	position[3] = glm::vec4(posIn, 1.0f);
+	radius = radiusN;
+	position = glm::mat4();
+	position = glm::translate(position, glm::vec3(posIn.x, posIn.y, posIn.z));
 
 
 
@@ -55,7 +56,7 @@ Joint::Joint(btDiscreteDynamicsWorld* worldN,glm::vec3 posIn,glm::vec3 bboxSize)
 
 
 	for (int i = 0; i < GetVertices().size(); i++){
-		GetVertices()[i].position *= bboxSize.x;
+		GetVertices()[i].position *= (radius);
 	}
 
 	GetIndices().push_back({ glm::uvec3(1, 14, 13) });
@@ -145,16 +146,7 @@ Joint::Joint(btDiscreteDynamicsWorld* worldN,glm::vec3 posIn,glm::vec3 bboxSize)
 		GetIndices()[i].indices.z--;
 	}
 
-	shape = new btSphereShape(bboxSize.x);
-
-	btDefaultMotionState* fallMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(posIn.x, posIn.y, posIn.z)));
-	btScalar mass = 1;
-	btVector3 fallInertia(0, 0, 0);
-	shape->calculateLocalInertia(mass, fallInertia);
-	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, shape, fallInertia);
-	rigidBody = new btRigidBody(fallRigidBodyCI);
-	world->addRigidBody(rigidBody);
+	shape = new btSphereShape(radius);
 
 	Load();
 }
@@ -165,7 +157,7 @@ Joint::~Joint()
 }
 
 void Joint::Update(){
-	//rigidBody->applyForce(btVector3(0.0f, 130.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
+	//rigidBody->applyForce(btVector3(0.0f, 30.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
 	Object::Update();
 }
 
@@ -173,7 +165,7 @@ void Joint::AddBone(Bone* nBone){
 
 	glm::vec3 diff = GetPosition()-nBone->GetPosition();
 
-	btPoint2PointConstraint* con = new btPoint2PointConstraint(*rigidBody, *nBone->GetRigidBody(), btVector3(0.0f, 0.0f, 0.0f), btVector3(diff.x, diff.y, diff.z));
-	world->addConstraint(con, true);
+	//btPoint2PointConstraint* con = new btPoint2PointConstraint(*rigidBody, *nBone->GetRigidBody(), btVector3(0.0f, 0.0f, 0.0f), btVector3(diff.x, diff.y, diff.z));
+	//world->addConstraint(con, true);
 	bones.insert(nBone);
 }

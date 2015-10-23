@@ -1,5 +1,4 @@
 //put global includes in 'BasicIncludes'
-// hi
 
 #include "BasicIncludes.h"
 #include "rand.h"
@@ -8,9 +7,12 @@
 #include "Object.h"
 #include "Terrain.h"
 #include "Anatomy.h"
+#include "GLDebugDrawer.h"
+
 
 //Function List
 void Update(double);
+void GetPositions();
 void Draw();
 void CameraInput();
 void MouseInput();
@@ -24,7 +26,8 @@ glm::uvec2 SCREEN_SIZE;
 Camera camera = Camera();
 glm::vec2 mouseChangeDegrees;
 double deltaTime;
-
+double physicsTimer;
+bool runPhysics;
 
 std::vector<Object*> objects;
 
@@ -34,8 +37,16 @@ void Terminate() {
 	exit(0);
 }
 
+void TogglePhysics(){
+	if (physicsTimer <= 0){
+		runPhysics = !runPhysics;
+		physicsTimer = 0.35f;
+	}
+}
+
 void InitializeWindow() {
 
+	runPhysics = false;
 
 	if (!glfwInit()) {
 		Terminate();
@@ -126,6 +137,7 @@ void InitializeWindow() {
 void Run() {
 
 		SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
+		SetKey(GLFW_KEY_SPACE, std::bind(&TogglePhysics));
 
 		deltaTime = 1.0 / 60.0;
 		InitializeWindow();
@@ -156,7 +168,13 @@ void Run() {
 		Object* testOrgP = &testOrg;
 		objects.push_back(testOrgP);
 
+		//GLDebugDrawer debugDraw= GLDebugDrawer(&camera);
 
+		//debugDraw.DBG_DrawWireframe; 
+		//debugDraw.setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+		//debugDraw.setDebugMode(1);
+
+		//world->setDebugDrawer(&debugDraw);
 
 		//timer info for loop
 		double t = 0.0f;
@@ -193,7 +211,10 @@ void Run() {
 				CameraInput(); //bypasses input system for direct camera manipulation
 				Update(deltaTime); //updates all objects based on the constant deltaTime.
 
-				world->stepSimulation(deltaTime, 10*timeMod);
+				if (runPhysics){
+					world->stepSimulation(deltaTime, 10 * timeMod);
+				}
+				GetPositions(); //transforms bullet matrices to opengl
 
 				t += deltaTime;
 				accumulator -= deltaTime;
@@ -201,12 +222,12 @@ void Run() {
 
 
 			//draw
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 			Draw();
-
+			//world->debugDrawWorld();
 			glfwSwapBuffers(mainThread);
 	}
 
@@ -269,7 +290,11 @@ void CameraInput() {
 		camera.offsetPosition(float(moveSpeed) * glm::vec3(0, 1, 0));
 	}
 }
-
+void GetPositions(){
+	for (int i = 0; i < objects.size(); i++){
+		objects[i]->UpdatePosition();
+	}
+}
 void Update(double dt) {
 	for (int i = 0; i < objects.size(); i++){
 		objects[i]->Update();

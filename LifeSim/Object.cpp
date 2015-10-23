@@ -26,6 +26,30 @@ void Object::Draw(Camera& camera)
 		shader->stopUsing();
 }
 void Object::Load(){
+
+	if (!isStatic){
+		btTransform trans;
+		trans.setFromOpenGLMatrix(glm::value_ptr(position));
+		btDefaultMotionState* motState =
+			new btDefaultMotionState(trans);
+		btScalar mass = 1;
+		btVector3 fallInertia(0, 0, 0);
+		shape->calculateLocalInertia(mass, fallInertia);
+		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motState, shape, fallInertia);
+		rigidBody = new btRigidBody(fallRigidBodyCI);
+		world->addRigidBody(rigidBody);
+	}
+	else{
+		btTransform trans;
+		trans.setFromOpenGLMatrix(glm::value_ptr(position));
+		btDefaultMotionState* motState =
+			new btDefaultMotionState(trans);
+		btRigidBody::btRigidBodyConstructionInfo
+			groundRigidBodyCI(0, motState, shape, btVector3(0, 0, 0));
+		rigidBody = new btRigidBody(groundRigidBodyCI);
+		world->addRigidBody(rigidBody);
+	}
+
 	shader = LoadShaders("vertex-shader[basic].txt", "geometry-shader[basic].txt","fragment-shader[basic].txt");
 	cameraUniform = shader->uniform("camera");
 	posUniform = shader->uniform("position");
@@ -51,6 +75,9 @@ void Object::Load(){
 }
 
 void Object::Update(){
+	
+}
+void Object::UpdatePosition(){
 	btTransform trans;
 	rigidBody->getMotionState()->getWorldTransform(trans);
 	trans.getOpenGLMatrix(glm::value_ptr(position));

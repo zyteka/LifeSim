@@ -123,6 +123,7 @@
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="GLDebugDrawer.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="Joint.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Bone.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GLDebugDrawer.h" />
     <ClInclude Include="GlobalStructures.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputHelper.h" />

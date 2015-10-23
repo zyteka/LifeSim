@@ -42,9 +42,6 @@ Bone::Bone(btDiscreteDynamicsWorld* worldN, Joint * left, Joint*right, glm::vec3
 	Load();
 }
 
-glm::vec3 Bone::GetPosition(){
-	return glm::vec3(position[3]);
-}
 Bone::~Bone()
 {
 }

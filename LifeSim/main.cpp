@@ -28,6 +28,7 @@ glm::vec2 mouseChangeDegrees;
 double deltaTime;
 double physicsTimer;
 bool runPhysics;
+double timeMod;
 
 std::vector<Object*> objects;
 
@@ -134,6 +135,14 @@ void InitializeWindow() {
 	SetInputWindow(mainThread);
 }
 
+void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	timeMod *= (1.0f+(yoffset / 15.0));
+	if (timeMod<0.005){
+		timeMod = 0.005;
+	}
+}
+
 void Run() {
 
 		SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
@@ -142,6 +151,7 @@ void Run() {
 		deltaTime = 1.0 / 60.0;
 		InitializeWindow();
 
+		glfwSetScrollCallback(mainThread, ScrollCallback);
 
 		//Init values and objects
 
@@ -186,7 +196,7 @@ void Run() {
 
 
 		//THIS IS TO SPEED UP TIME
-		float timeMod = 1.0f;
+		timeMod = 1.;
 
 		while (!glfwWindowShouldClose(mainThread)) {
 			double newTime = glfwGetTime();
@@ -209,10 +219,10 @@ void Run() {
 				glfwPollEvents(); //executes all set input callbacks
 
 				CameraInput(); //bypasses input system for direct camera manipulation
-				Update(deltaTime); //updates all objects based on the constant deltaTime.
+				Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
 
 				if (runPhysics){
-					world->stepSimulation(deltaTime, 10 * timeMod);
+					world->stepSimulation(deltaTime*timeMod, glm::max(10 * timeMod,10.0));
 				}
 				GetPositions(); //transforms bullet matrices to opengl
 

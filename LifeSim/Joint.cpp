@@ -157,15 +157,17 @@ Joint::~Joint()
 }
 
 void Joint::Update(){
-	//rigidBody->applyForce(btVector3(0.0f, 30.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
+	rigidBody->applyForce(btVector3(0.0f, 30.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
 	Object::Update();
 }
 
 void Joint::AddBone(Bone* nBone){
 
-	glm::vec3 diff = GetPosition()-nBone->GetPosition();
+	btVector3 pivotInA = btVector3(0.0f, 0.0f, 0.0f);
 
-	//btPoint2PointConstraint* con = new btPoint2PointConstraint(*rigidBody, *nBone->GetRigidBody(), btVector3(0.0f, 0.0f, 0.0f), btVector3(diff.x, diff.y, diff.z));
-	//world->addConstraint(con, true);
+	btVector3 pivotInB = nBone->GetRigidBody() ? nBone->GetRigidBody()->getCenterOfMassTransform().inverse()(GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInA;
+
+	btPoint2PointConstraint* con = new btPoint2PointConstraint(*rigidBody, *nBone->GetRigidBody(), pivotInA, pivotInB);
+	world->addConstraint(con, true);
 	bones.insert(nBone);
 }

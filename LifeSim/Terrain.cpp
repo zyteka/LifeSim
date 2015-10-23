@@ -5,7 +5,6 @@ Terrain::Terrain(btDiscreteDynamicsWorld* worldN)
 {
 	isStatic=true;
 	world = worldN;
-	position = glm::mat4();
 
 	GetVertices().push_back({ { -1.0f*KILOMETER, 0.0f, -1.0f*KILOMETER }, { 0.9f, 0.9f, 0.9f } });
 	GetVertices().push_back({ { 1.0f*KILOMETER, 0.0f, 1.0f*KILOMETER }, { 0.9f, 0.9f, 0.9f } });

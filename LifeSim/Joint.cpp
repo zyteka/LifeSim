@@ -6,7 +6,6 @@ Joint::Joint(btDiscreteDynamicsWorld* worldN, glm::vec3 posIn, float radiusN)
 	isStatic = false;
 	world = worldN;
 	radius = radiusN;
-	position = glm::mat4();
 	position = glm::translate(position, glm::vec3(posIn.x, posIn.y, posIn.z));
 
 

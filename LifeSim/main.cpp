@@ -13,6 +13,7 @@
 //Function List
 void Update(double);
 void GetPositions();
+void DecrementTimers();
 void Draw();
 void CameraInput();
 void MouseInput();
@@ -48,6 +49,7 @@ void TogglePhysics(){
 void InitializeWindow() {
 
 	runPhysics = false;
+	physicsTimer = 0;
 
 	if (!glfwInit()) {
 		Terminate();
@@ -174,9 +176,11 @@ void Run() {
 		Object* terrain = &testObj;
 		objects.push_back(terrain);
 
-		Anatomy testOrg = Anatomy(world);
-		Object* testOrgP = &testOrg;
-		objects.push_back(testOrgP);
+		for (int i = 0; i < 30;i++){
+			Anatomy* testOrg = new Anatomy(world, glm::vec3(i*1.0f*METER, 0.0f, i*1.0f*METER));
+			Object* testOrgP = testOrg;
+			objects.push_back(testOrgP);
+		}
 
 		//GLDebugDrawer debugDraw= GLDebugDrawer(&camera);
 
@@ -219,12 +223,15 @@ void Run() {
 				glfwPollEvents(); //executes all set input callbacks
 
 				CameraInput(); //bypasses input system for direct camera manipulation
-				Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
 
-				if (runPhysics){
+				if (runPhysics){	
+					Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
 					world->stepSimulation(deltaTime*timeMod, glm::max(10 * timeMod,10.0));
 				}
 				GetPositions(); //transforms bullet matrices to opengl
+
+
+				DecrementTimers();
 
 				t += deltaTime;
 				accumulator -= deltaTime;
@@ -250,6 +257,13 @@ void Run() {
 		delete collisionConfiguration;
 		delete broadphase;
 
+}
+
+void DecrementTimers(){
+	if (physicsTimer>0){
+		physicsTimer = physicsTimer - deltaTime;
+
+	}
 }
 void MouseInput() {
 	double xPos;

@@ -94,3 +94,7 @@ btRigidBody* Object::GetRigidBody(){
 glm::vec3 Object::GetPosition(){
 	return glm::vec3(position[3]);
 }
+
+glm::mat4 Object::GetMatrix(){
+	return position;
+}

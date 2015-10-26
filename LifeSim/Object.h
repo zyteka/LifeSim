@@ -16,6 +16,7 @@ public:
 	virtual void Update();
 	btRigidBody* GetRigidBody();
 	glm::vec3 GetPosition();
+	glm::mat4 GetMatrix();
 
 	virtual void UpdatePosition();
 

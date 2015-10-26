@@ -14,7 +14,7 @@ public:
 
 private:
 	float forceApplied;
-
+	void ChangeForce(float);
 	float maxForce;
 
 	Joint* joint;

@@ -2,14 +2,16 @@
 #include "Bone.h"
 #include "Joint.h"
 
-Muscle::Muscle( Bone* leftN, Bone* rightN, Joint* jointN,float leftRelN,float rightRelN,float maxForceN)
+Muscle::Muscle(btDynamicsWorld* worldN, Bone* leftN, Bone* rightN, Joint* jointN,float maxDist)
 {
+	world = worldN;
 	left = leftN;
 	right = rightN;
 	joint = jointN;
-	leftRel = leftRelN;
-	rightRel = rightRelN;
-	maxForce = maxForceN;
+	maxDistance = maxDist;
+
+
+	//world->addConstraint(con, true);
 }
 
 void Muscle::ChangeForce(float deltaX){
@@ -30,17 +32,36 @@ void Muscle::Update(float expand){
 
 	ChangeForce(expand);
 
-	glm::vec3 leftVec = glm::vec3(glm::vec4((rightPos - leftPos), 1.0f)*left->GetMatrix())*NEWTON*expand;
+	//glm::vec3 relativeJointNormal = glm::normalize(glm::vec3(joint->GetMatrix()*glm::vec4(jointNormal, 1.0f)) - joint->GetPosition());
+
+	//btVector3 pivotInJoint = btVector3(0.0f, 0.0f, 0.0f);
+
+	//btVector3 pivotInLeft = left->GetRigidBody() ? left->GetRigidBody()->getCenterOfMassTransform().inverse()(joint->GetRigidBody()->getCenterOfMassTransform()(pivotInJoint)) : pivotInJoint;
+	//btVector3 pivotInRight = right->GetRigidBody() ? right->GetRigidBody()->getCenterOfMassTransform().inverse()(joint->GetRigidBody()->getCenterOfMassTransform()(pivotInJoint)) : pivotInJoint;
+
+	//btVector3 targetLeft = btVector3(relativeJointNormal.z, relativeJointNormal.y, relativeJointNormal.z)*left->height -pivotInLeft ;
+
+	//pivotInLeft = -pivotInLeft;
+
+	//btVector3 targetRight =  btVector3(relativeJointNormal.z, relativeJointNormal.y, relativeJointNormal.z)*right->height-pivotInRight ;
+
+	//pivotInRight = -pivotInRight;
+
+	//btVector3 forceLeft = (targetLeft- pivotInLeft)*NEWTON*expand*10.0f;
+
+	//btVector3 forceRight = (targetRight - pivotInRight)*NEWTON*expand*10.0f;
 
 
-	left->GetRigidBody()->applyForce(btVector3(0,10,0)*NEWTON, btVector3(0.0f, 0.0f, 0.0f));
+	//glm::vec3 leftVec = (glm::vec3(left->GetMatrix()*glm::vec4(glm::vec3(0.0f,0.0f,-1.0f), 1.0f))-left->GetPosition())*NEWTON*100.0f*expand;
+	//btVector3 leftV = btVector3(leftVec.x, leftVec.y, leftVec.z);
+
+	////left->GetRigidBody()->applyForce(forceLeft, pivotInLeft);
 
 
+	//glm::vec3 rightVec = (glm::vec3(right->GetMatrix()*glm::vec4(glm::vec3(0.0f, 0.0f, -1.0f), 1.0f)) - right->GetPosition())*NEWTON*100.0f*expand;
+	//btVector3 rightV = btVector3(rightVec.x, rightVec.y, rightVec.z);
 
-	glm::vec3 rightVec = glm::normalize(leftPos-rightPos);
-
-
-	right->GetRigidBody()->applyForce(btVector3(0,10,0)*NEWTON, btVector3(0, 0.0f, 0.0f));
+	////right->GetRigidBody()->applyForce(forceRight, pivotInRight);
 }
 
 Muscle::~Muscle()

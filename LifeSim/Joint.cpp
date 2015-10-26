@@ -1,8 +1,9 @@
 #include "Joint.h"
 #include "Bone.h"
 
-Joint::Joint(btDiscreteDynamicsWorld* worldN, glm::vec3 posIn, float radiusN)
+Joint::Joint(btDiscreteDynamicsWorld* worldN, glm::vec3 posIn, glm::vec3 inAxis,float radiusN)
 {
+	localAxisofRotation = inAxis;
 	isStatic = false;
 	world = worldN;
 	radius = radiusN;
@@ -156,7 +157,8 @@ Joint::~Joint()
 }
 
 void Joint::Update(){
-	//rigidBody->applyForce(btVector3(0.0f, 20.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
+	//rigidBody->applyForce(btVector3(0.0f, 25.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
+	//rigidBody->applyForce(btVector3(0.0f, 0.0f*NEWTON, 5.0f*NEWTON), btVector3(1.0f, 0.0f, 0.0f));
 	Object::Update();
 }
 
@@ -166,7 +168,9 @@ void Joint::AddBone(Bone* nBone){
 
 	btVector3 pivotInB = nBone->GetRigidBody() ? nBone->GetRigidBody()->getCenterOfMassTransform().inverse()(GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInA;
 
-	btPoint2PointConstraint* con = new btPoint2PointConstraint(*rigidBody, *nBone->GetRigidBody(), pivotInA, pivotInB);
+	btVector3 axisInA = btVector3(localAxisofRotation.x, localAxisofRotation.y, localAxisofRotation.z);
+
+	btHingeConstraint* con = new btHingeConstraint(*rigidBody, *nBone->GetRigidBody(), pivotInA, pivotInB, axisInA, axisInA, true);
 	world->addConstraint(con, true);
 	bones.insert(nBone);
 }

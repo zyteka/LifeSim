@@ -17,7 +17,7 @@ Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN, glm::vec3 basePos){
 	glm::vec3 bonePosition = (pos1 + pos2) / 2.0f;
 	glm::vec3 bonePosition1 = (pos3 + pos2) / 2.0f;
 
-	Joint* joint2 = new Joint(world, pos2, jointRadius);
+	Joint* joint2 = new Joint(world, pos2, glm::vec3(1.0f,0.0f,0.0f),jointRadius);
 
 	Bone* bone1 = new Bone(worldN, joint2,NULL , bonePosition, capRadius, boneSize);
 	Bone* bone2 = new Bone(worldN, joint2, NULL, bonePosition1, capRadius, boneSize);
@@ -30,7 +30,7 @@ Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN, glm::vec3 basePos){
 
 	joints.insert(joint2);
 
-	Muscle* muscle1 = new Muscle(bone1,bone2,joint2,0,0,1.0f);
+	Muscle* muscle1 = new Muscle(worldN,bone1, bone2, joint2, 1.0f*METER);
 	muscles.insert(muscle1);
 }
 

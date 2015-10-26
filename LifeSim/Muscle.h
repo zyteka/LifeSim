@@ -1,13 +1,12 @@
 #pragma once
 #include "BasicIncludes.h"
-
 class Bone;
 class Joint;
 
 class Muscle
 {
 public:
-	Muscle(Bone*,Bone* ,Joint*,float,float,float);
+	Muscle(btDynamicsWorld*,Bone*, Bone*, Joint*, float);
 	~Muscle();
 
 	void Update(float);
@@ -15,12 +14,11 @@ public:
 private:
 	float forceApplied;
 	void ChangeForce(float);
-	float maxForce;
+	float maxDistance;
 
+	btDynamicsWorld* world;
 	Joint* joint;
 	Bone* left;
-	float leftRel;
 	Bone* right;
-	float rightRel;
 };
 

@@ -2,16 +2,69 @@
 #include "Bone.h"
 #include "Joint.h"
 
-Muscle::Muscle(btDynamicsWorld* worldN, Bone* leftN, Bone* rightN, Joint* jointN,float maxDist)
+Muscle::Muscle(btDiscreteDynamicsWorld* worldN, Bone* leftN, Bone* rightN, Joint* jointN, float leftLinN, float rightLinN)
 {
+	isGhost = true;
 	world = worldN;
 	left = leftN;
 	right = rightN;
 	joint = jointN;
-	maxDistance = maxDist;
+	extend = false;
 
+	one = new MuscleConnector(world,left,joint,leftLinN);
+	two = new MuscleConnector(world, right, joint, rightLinN);
 
-	//world->addConstraint(con, true);
+	glm::vec3 pos = (left->GetPosition() + right->GetPosition()) / 2.0f;
+	position = glm::translate(position, pos);
+	position = glm::rotate(position, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	float height = 1.0f*METER;
+	float radius = 0.25*METER;
+
+	GetVertices().push_back({ { -radius, -height / 2.0f, -radius }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { radius, -height / 2.0f, radius }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -radius, -height / 2.0f, radius }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { radius, -height / 2.0f, -radius }, { 0.0f, 0.0f, 1.0f } });
+
+	GetVertices().push_back({ { -radius, height / 2.0f, -radius }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { radius, height / 2.0f, radius }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -radius, height / 2.0f, radius }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { radius, height / 2.0f, -radius }, { 0.0f, 0.0f, 1.0f } });
+
+	GetIndices().push_back({ glm::uvec3(0, 1, 2) });
+	GetIndices().push_back({ glm::uvec3(0, 3, 1) });
+	GetIndices().push_back({ glm::uvec3(4, 6, 5) });
+	GetIndices().push_back({ glm::uvec3(4, 5, 7) });
+	GetIndices().push_back({ glm::uvec3(0, 2, 6) });
+	GetIndices().push_back({ glm::uvec3(0, 6, 4) });
+	GetIndices().push_back({ glm::uvec3(1, 3, 7) });
+	GetIndices().push_back({ glm::uvec3(1, 7, 5) });
+	GetIndices().push_back({ glm::uvec3(0, 4, 7) });
+	GetIndices().push_back({ glm::uvec3(0, 7, 3) });
+	GetIndices().push_back({ glm::uvec3(1, 5, 6) });
+	GetIndices().push_back({ glm::uvec3(1, 6, 2) });
+
+	shape = new btCapsuleShape(radius, height - (radius * 2));
+
+	Load();
+	UpdateConstraint(one,two);
+}
+void Muscle::UpdateConstraint(MuscleConnector* one, MuscleConnector* two){
+	btVector3 pivotInA = btVector3(0.0f, 0.0f, 0.0f);
+	btVector3 pivotInC = btVector3(0.0f, 0.0f, 0.0f);
+
+	btVector3 pivotInB = rigidBody ? rigidBody->getCenterOfMassTransform().inverse()(GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInA;
+
+	btVector3 axisInA = btVector3(joint->localAxisofRotation.x, joint->localAxisofRotation.y, joint->localAxisofRotation.z);
+
+	btTransform frameA = one->GetRigidBody()->getWorldTransform();
+	btTransform frameB = rigidBody->getWorldTransform();
+	btTransform frameC = two->GetRigidBody()->getWorldTransform();
+
+	conOne = new btSliderConstraint(*one->GetRigidBody(), *rigidBody, frameA, frameB, true);
+	conTwo = new btSliderConstraint(*two->GetRigidBody(), *rigidBody, frameC, frameB, true);
+	world->addConstraint(conOne, true);
+	world->addConstraint(conTwo, true);
 }
 
 void Muscle::ChangeForce(float deltaX){
@@ -24,44 +77,26 @@ void Muscle::ChangeForce(float deltaX){
 	}
 }
 
+void  Muscle::Draw(Camera& camera){
+	Object::Draw(camera);
+	one->Draw(camera);
+	two->Draw(camera);
+}
+
 void Muscle::Update(float expand){
 
-	glm::vec3 leftPos  = left->GetPosition();
-	glm::vec3 rightPos = right->GetPosition();
-	glm::vec3 jointPos = joint->GetPosition();
-
-	ChangeForce(expand);
-
-	//glm::vec3 relativeJointNormal = glm::normalize(glm::vec3(joint->GetMatrix()*glm::vec4(jointNormal, 1.0f)) - joint->GetPosition());
-
-	//btVector3 pivotInJoint = btVector3(0.0f, 0.0f, 0.0f);
-
-	//btVector3 pivotInLeft = left->GetRigidBody() ? left->GetRigidBody()->getCenterOfMassTransform().inverse()(joint->GetRigidBody()->getCenterOfMassTransform()(pivotInJoint)) : pivotInJoint;
-	//btVector3 pivotInRight = right->GetRigidBody() ? right->GetRigidBody()->getCenterOfMassTransform().inverse()(joint->GetRigidBody()->getCenterOfMassTransform()(pivotInJoint)) : pivotInJoint;
-
-	//btVector3 targetLeft = btVector3(relativeJointNormal.z, relativeJointNormal.y, relativeJointNormal.z)*left->height -pivotInLeft ;
-
-	//pivotInLeft = -pivotInLeft;
-
-	//btVector3 targetRight =  btVector3(relativeJointNormal.z, relativeJointNormal.y, relativeJointNormal.z)*right->height-pivotInRight ;
-
-	//pivotInRight = -pivotInRight;
-
-	//btVector3 forceLeft = (targetLeft- pivotInLeft)*NEWTON*expand*10.0f;
-
-	//btVector3 forceRight = (targetRight - pivotInRight)*NEWTON*expand*10.0f;
-
-
-	//glm::vec3 leftVec = (glm::vec3(left->GetMatrix()*glm::vec4(glm::vec3(0.0f,0.0f,-1.0f), 1.0f))-left->GetPosition())*NEWTON*100.0f*expand;
-	//btVector3 leftV = btVector3(leftVec.x, leftVec.y, leftVec.z);
-
-	////left->GetRigidBody()->applyForce(forceLeft, pivotInLeft);
-
-
-	//glm::vec3 rightVec = (glm::vec3(right->GetMatrix()*glm::vec4(glm::vec3(0.0f, 0.0f, -1.0f), 1.0f)) - right->GetPosition())*NEWTON*100.0f*expand;
-	//btVector3 rightV = btVector3(rightVec.x, rightVec.y, rightVec.z);
-
-	////right->GetRigidBody()->applyForce(forceRight, pivotInRight);
+	if (extend){
+		conOne->setPoweredLinMotor(true);
+		conTwo->setPoweredLinMotor(true);
+		conOne->setMaxLinMotorForce(3*NEWTON);
+		conTwo->setTargetLinMotorVelocity(1.0f);    // negative value to contract
+	}
+	else{
+		conOne->setPoweredLinMotor(true);
+		conTwo->setPoweredLinMotor(true);
+		conOne->setMaxLinMotorForce(3 * NEWTON);
+		conTwo->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
+	}
 }
 
 Muscle::~Muscle()

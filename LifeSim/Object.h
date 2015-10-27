@@ -25,6 +25,7 @@ public:
 
 protected:
 	bool isStatic;
+	bool isGhost;
 	btDiscreteDynamicsWorld* world;
 	btCollisionShape* shape;
 	btRigidBody* rigidBody;

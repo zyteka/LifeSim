@@ -3,6 +3,8 @@
 
 Object::Object()
 {
+	isStatic = false;
+	isGhost = false;
 	position = glm::mat4();
 }
 
@@ -37,6 +39,9 @@ void Object::Load(){
 		shape->calculateLocalInertia(mass, fallInertia);
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motState, shape, fallInertia);
 		rigidBody = new btRigidBody(fallRigidBodyCI);
+		if (isGhost){
+			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
+		}
 		world->addRigidBody(rigidBody);
 	}
 	else{
@@ -47,6 +52,9 @@ void Object::Load(){
 		btRigidBody::btRigidBodyConstructionInfo
 			groundRigidBodyCI(0, motState, shape, btVector3(0, 0, 0));
 		rigidBody = new btRigidBody(groundRigidBodyCI);
+		if (isGhost){
+			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
+		}
 		world->addRigidBody(rigidBody);
 	}
 

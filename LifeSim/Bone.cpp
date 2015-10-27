@@ -3,7 +3,7 @@
 
 Bone::Bone(btDiscreteDynamicsWorld* worldN, Joint * left, Joint*right, glm::vec3 pos, float radiusN, float heightN)
 {
-	isStatic = false;
+
 	world = worldN;
 	position=glm::translate(position, pos);
 	position=glm::rotate(position, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));

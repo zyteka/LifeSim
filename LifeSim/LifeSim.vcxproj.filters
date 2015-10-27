@@ -75,6 +75,9 @@
     <ClCompile Include="Muscle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MuscleConnector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicIncludes.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Muscle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MuscleConnector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

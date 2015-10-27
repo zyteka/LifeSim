@@ -172,5 +172,6 @@ void Joint::AddBone(Bone* nBone){
 
 	btHingeConstraint* con = new btHingeConstraint(*rigidBody, *nBone->GetRigidBody(), pivotInA, pivotInB, axisInA, axisInA, true);
 	world->addConstraint(con, true);
+
 	bones.insert(nBone);
 }

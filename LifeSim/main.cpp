@@ -118,7 +118,9 @@ void InitializeWindow() {
 	glDepthMask(GL_TRUE);  // turn on
 	glDepthFunc(GL_LEQUAL);
 	glDepthRange(0.0f, 1.0f);
-	glEnable(GL_TEXTURE_2D);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	mouseChangeDegrees = glm::vec2(0);
 
@@ -146,6 +148,7 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 void Run() {
+	
 
 		SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
 		SetKey(GLFW_KEY_SPACE, std::bind(&TogglePhysics));

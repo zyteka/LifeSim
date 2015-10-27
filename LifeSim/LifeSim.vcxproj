@@ -129,6 +129,7 @@
     <ClCompile Include="Joint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Muscle.cpp" />
+    <ClCompile Include="MuscleConnector.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Organism.cpp" />
     <ClCompile Include="Perlin.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Joint.h" />
     <ClInclude Include="Metrics.h" />
     <ClInclude Include="Muscle.h" />
+    <ClInclude Include="MuscleConnector.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Organism.h" />
     <ClInclude Include="Perlin.h" />

@@ -14,6 +14,7 @@ public:
 
 	void Update(float);
 	void Draw(Camera&);
+	void UpdatePosition();
 
 private:
 	void UpdateConstraint(MuscleConnector*, MuscleConnector*);

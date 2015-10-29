@@ -61,10 +61,16 @@ void Muscle::UpdateConstraint(MuscleConnector* one, MuscleConnector* two){
 	btTransform frameB = rigidBody->getWorldTransform();
 	btTransform frameC = two->GetRigidBody()->getWorldTransform();
 
-	conOne = new btSliderConstraint(*one->GetRigidBody(), *rigidBody, frameA, frameB, true);
-	conTwo = new btSliderConstraint(*two->GetRigidBody(), *rigidBody, frameC, frameB, true);
+	conOne = new btSliderConstraint(*one->GetRigidBody(), *rigidBody, frameA, frameB, false);
+	conTwo = new btSliderConstraint(*two->GetRigidBody(), *rigidBody, frameC, frameB, false);
 	world->addConstraint(conOne, true);
 	world->addConstraint(conTwo, true);
+}
+
+void Muscle::UpdatePosition(){
+	one->UpdatePosition();
+	two->UpdatePosition();
+	Object::UpdatePosition();
 }
 
 void Muscle::ChangeForce(float deltaX){

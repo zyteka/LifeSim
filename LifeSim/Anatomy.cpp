@@ -30,7 +30,7 @@ Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN, glm::vec3 basePos){
 
 	joints.insert(joint2);
 
-	Muscle* muscle1 = new Muscle(worldN,bone1, bone2, joint2, 1.0f,0.0f);
+	Muscle* muscle1 = new Muscle(worldN,bone1, bone2, joint2, 1.0f,1.0f);
 	muscles.insert(muscle1);
 }
 
@@ -71,6 +71,9 @@ void  Anatomy::UpdatePosition(){
 		(*i)->UpdatePosition();
 	}
 	for (std::set<Joint*>::iterator i = joints.begin(); i != joints.end(); i++) {
+		(*i)->UpdatePosition();
+	}
+	for (std::set<Muscle*>::iterator i = muscles.begin(); i != muscles.end(); i++) {
 		(*i)->UpdatePosition();
 	}
 }

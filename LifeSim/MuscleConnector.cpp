@@ -10,7 +10,7 @@ MuscleConnector::MuscleConnector(btDiscreteDynamicsWorld* worldN, Bone* boneN, J
 	joint = jointN;
 	translate = trans;
 
-	glm::vec3 relToBone = glm::normalize(bone->GetPosition() - joint->GetPosition())*trans*bone->height - (bone->height/2.0f);
+	glm::vec3 relToBone = glm::normalize(bone->GetPosition() - joint->GetPosition())*trans*(bone->height/2.0f);
 	position = glm::translate(position, relToBone + bone->GetPosition());
 
 	float radius = 0.175f*METER;

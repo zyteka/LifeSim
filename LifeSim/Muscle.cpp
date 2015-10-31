@@ -64,19 +64,23 @@ void Muscle::UpdateConstraint(MuscleConnector* one, MuscleConnector* two){
 
 	btTransform frameRight;
 	frameRight.setIdentity();
-	btVector3 pivotAtoB = two->GetRigidBody() ? two->GetRigidBody()->getCenterOfMassTransform().inverse()(one->GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInC;
-	frameRight.setOrigin(pivotAtoB);
+	//btVector3 pivotAtoB = two->GetRigidBody() ? two->GetRigidBody()->getCenterOfMassTransform().inverse()(one->GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInC;
+	//frameRight.setOrigin(pivotAtoB);
 
 	//std::swap(frameLeft, frameRight);
 
+	btTransform frameCenter;
+	frameCenter.setIdentity();
 
-	conOne = new btSliderConstraint(*one->GetRigidBody(), *two->GetRigidBody(), frameLeft, frameRight, false);
+	conOne = new btSliderConstraint(*one->GetRigidBody(), *GetRigidBody(), frameLeft, frameCenter, true);
+	conTwo = new btSliderConstraint(*two->GetRigidBody(), *GetRigidBody(), frameRight, frameCenter, true);
 
-	conOne->setLowerLinLimit(15.0F);
-	conOne->setUpperLinLimit(5.0F);
+
+	//conOne->setLowerLinLimit(3.0F*METER);
+	//conOne->setUpperLinLimit(1.0F*METER);
 
 	world->addConstraint(conOne, true);
-
+	world->addConstraint(conTwo, true);
 }
 
 void Muscle::UpdatePosition(){
@@ -106,14 +110,25 @@ void Muscle::Update(float expand){
 	if (extend){
 		conOne->setPoweredLinMotor(true);
 		//conTwo->setPoweredLinMotor(true);
-		conOne->setMaxLinMotorForce(30*NEWTON);
+		conOne->setMaxLinMotorForce(10*NEWTON);
 		conOne->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
+
+
+		conTwo->setPoweredLinMotor(true);
+		//conTwo->setPoweredLinMotor(true);
+		conTwo->setMaxLinMotorForce(10 * NEWTON);
+		conTwo->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
 	}
 	else{
 		conOne->setPoweredLinMotor(true);
 		//conTwo->setPoweredLinMotor(true);
-		conOne->setMaxLinMotorForce(30 * NEWTON);
+		conOne->setMaxLinMotorForce(10 * NEWTON);
 		conOne->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
+
+		conTwo->setPoweredLinMotor(true);
+		//conTwo->setPoweredLinMotor(true);
+		conTwo->setMaxLinMotorForce(10 * NEWTON);
+		conTwo->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
 	}
 }
 

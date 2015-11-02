@@ -324,7 +324,7 @@ void GetPositions(){
 }
 void Update(double dt) {
 	for (int i = 0; i < objects.size(); i++){
-		objects[i]->Update();
+		objects[i]->Update(dt);
 	}
 }
 void Draw() {

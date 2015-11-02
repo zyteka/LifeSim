@@ -13,7 +13,7 @@ public:
 
 	void Load();
 	void Draw(Camera& camera);
-	void Update();
+	void Update(double dt);
 	void UpdatePosition();
 	//Convert Anatomy to unsigned int for use in hashing
 	operator unsigned int() const;

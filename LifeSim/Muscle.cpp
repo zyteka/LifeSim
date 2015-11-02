@@ -2,6 +2,8 @@
 #include "Bone.h"
 #include "Joint.h"
 
+float x = 0.0f;
+
 Muscle::Muscle(btDiscreteDynamicsWorld* worldN, Bone* leftN, Bone* rightN, Joint* jointN, float leftLinN, float rightLinN)
 {
 	isGhost = true;
@@ -64,13 +66,13 @@ void Muscle::UpdateConstraint(MuscleConnector* one, MuscleConnector* two){
 	btTransform frameLeft;
 	frameLeft.setIdentity();
 	frameLeft.getBasis().setEulerZYX(0.0f, 0.0f, (3/2.0f)*PI);
-	//frameLeft.setOrigin(btVector3(-0.25f*METER, 0.0f, 0.0f));
+	//frameLeft.setOrigin(btVector3(0.25f*METER, 0.0f, 0.0f));
 	btTransform frameRight;
 	frameRight.setIdentity();
 
 	frameRight.getBasis().setEulerZYX(0.0f, 0.0f, (3 / 2.0f)*PI);
 	//frameLeft.getBasis().setEulerZYX(0.0f,0.0f,1.0f);
-	//frameRight.setOrigin(btVector3(0.25f*METER, 0.0f, 0.0f));
+	//frameRight.setOrigin(btVector3(-0.25f*METER, 0.0f, 0.0f));
 	//btVector3 pivotAtoB = two->GetRigidBody() ? two->GetRigidBody()->getCenterOfMassTransform().inverse()(one->GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInC;
 	//frameRight.setOrigin(pivotAtoB);
 
@@ -109,11 +111,13 @@ void  Muscle::Draw(Camera& camera){
 	two->Draw(camera);
 }
 
-void Muscle::Update(float expand){
+void Muscle::Update(double dt){
+	x += dt/35.0f;
 
+	float lin = sin(x);
 	constraint->setPoweredLinMotor(true);
-	constraint->setMaxLinMotorForce(1 * NEWTON);
-	constraint->setTargetLinMotorVelocity(-10.0f);
+	constraint->setMaxLinMotorForce(7 * NEWTON);
+	constraint->setTargetLinMotorVelocity(lin*7.0f);
 
 }
 

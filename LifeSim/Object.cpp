@@ -83,7 +83,7 @@ void Object::Load(){
 	glBindVertexArray(0);
 }
 
-void Object::Update(){
+void Object::Update(double dt){
 	
 }
 void Object::UpdatePosition(){

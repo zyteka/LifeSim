@@ -156,10 +156,10 @@ Joint::~Joint()
 {
 }
 
-void Joint::Update(){
+void Joint::Update(double dt){
 	//rigidBody->applyForce(btVector3(0.0f*METER, 30.0f*NEWTON, 0.0f*METER), btVector3(0.0f, 0.0f, 0.0f));
 	//rigidBody->applyForce(btVector3(2.0f*METER, 0.0f*NEWTON, 5.0f*NEWTON), btVector3(1.0f, 0.0f, 0.0f));
-	Object::Update();
+	Object::Update(dt);
 }
 
 void Joint::AddBone(Bone* nBone){

@@ -13,7 +13,7 @@ public:
 
 	virtual void Draw(Camera&);
 	virtual void Load();
-	virtual void Update();
+	virtual void Update(double );
 	btRigidBody* GetRigidBody();
 	glm::vec3 GetPosition();
 	glm::mat4 GetMatrix();

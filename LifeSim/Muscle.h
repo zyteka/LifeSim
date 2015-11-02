@@ -12,7 +12,7 @@ public:
 	Muscle(btDiscreteDynamicsWorld* worldN, Bone* leftN, Bone* rightN, Joint* jointN, float leftLinN, float rightLinN);
 	~Muscle();
 
-	void Update(float);
+	void Update(double);
 	void Draw(Camera&);
 	void UpdatePosition();
 

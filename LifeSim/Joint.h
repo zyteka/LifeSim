@@ -12,7 +12,7 @@ public:
 	Joint(btDiscreteDynamicsWorld*,glm::vec3,glm::vec3,float);
 	~Joint();
 
-	void Update();
+	void Update(double dt);
 
 	void AddBone(Bone*);
 

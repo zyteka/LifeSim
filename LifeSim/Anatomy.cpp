@@ -54,16 +54,16 @@ void  Anatomy::Draw(Camera& camera){
 		(*i)->Draw(camera);
 	}
 }
-void  Anatomy::Update(){
+void  Anatomy::Update(double dt){
 	for (std::set<Bone*>::iterator i = bones.begin(); i != bones.end(); i++) {
-		(*i)->Update();
+		(*i)->Update(dt);
 	}
 	for (std::set<Joint*>::iterator i = joints.begin(); i != joints.end(); i++) {
-		(*i)->Update();
+		(*i)->Update(dt);
 	}
 
 	for (std::set<Muscle*>::iterator i = muscles.begin(); i != muscles.end(); i++) {
-		(*i)->Update(-1.0f);
+		(*i)->Update(dt);
 	}
 }
 void  Anatomy::UpdatePosition(){

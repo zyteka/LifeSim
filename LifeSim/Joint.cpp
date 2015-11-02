@@ -157,7 +157,7 @@ Joint::~Joint()
 }
 
 void Joint::Update(){
-	rigidBody->applyForce(btVector3(0.0f*METER, 30.0f*NEWTON, 0.0f*METER), btVector3(0.0f, 0.0f, 0.0f));
+	//rigidBody->applyForce(btVector3(0.0f*METER, 30.0f*NEWTON, 0.0f*METER), btVector3(0.0f, 0.0f, 0.0f));
 	//rigidBody->applyForce(btVector3(2.0f*METER, 0.0f*NEWTON, 5.0f*NEWTON), btVector3(1.0f, 0.0f, 0.0f));
 	Object::Update();
 }
@@ -180,12 +180,12 @@ void Joint::AddBone(Bone* nBone){
 
 	btHingeConstraint* con = new btHingeConstraint(*bodyA, *bodyB, pivotInA, pivotInB, axisInA, axisInA, true);
 
-	con->setLimit(0.0f, PI, 0.5f, 0.3f, 1.0f);
+	//con->setLimit(PI, 2*PI, 0.5f, 0.3f, 1.0f);
 	//con->set
 
-	con->enableMotor(true);
-	con->setMaxMotorImpulse(200.0f);
-	con->setMotorTarget(0, 1.0f / 60.0f);
+	//con->enableMotor(true);
+	//con->setMaxMotorImpulse(200.0f);
+	//con->setMotorTarget(0, 1.0f / 60.0f);
 
 	world->addConstraint(con, true);
 

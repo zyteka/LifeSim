@@ -21,15 +21,15 @@ Muscle::Muscle(btDiscreteDynamicsWorld* worldN, Bone* leftN, Bone* rightN, Joint
 	float height = 1.0f*METER;
 
 	float width = 0.3f*METER;
-	GetVertices().push_back({ { -height / 2.0f, -width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, -width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { -height / 2.0f, -width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, -width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -width / 2.0f, -height / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { width / 2.0f, -height / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -width / 2.0f, -height / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { width / 2.0f, -height / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
 
-	GetVertices().push_back({ { -height / 2.0f, width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { -height / 2.0f, width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -width / 2.0f, height / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { width / 2.0f, height / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -width / 2.0f, height / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { width / 2.0f, height / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
 
 	GetIndices().push_back({ glm::uvec3(0, 1, 2) });
 	GetIndices().push_back({ glm::uvec3(0, 3, 1) });
@@ -63,21 +63,27 @@ void Muscle::UpdateConstraint(MuscleConnector* one, MuscleConnector* two){
 
 	btTransform frameLeft;
 	frameLeft.setIdentity();
-	frameLeft.setOrigin(btVector3(-0.25f*METER, 0.0f, 0.0f));
+	frameLeft.getBasis().setEulerZYX(0.0f, 0.0f, (3/2.0f)*PI);
+	//frameLeft.setOrigin(btVector3(-0.25f*METER, 0.0f, 0.0f));
 	btTransform frameRight;
 	frameRight.setIdentity();
-	frameRight.setOrigin(btVector3(0.25f*METER, 0.0f, 0.0f));
+
+	frameRight.getBasis().setEulerZYX(0.0f, 0.0f, (3 / 2.0f)*PI);
+	//frameLeft.getBasis().setEulerZYX(0.0f,0.0f,1.0f);
+	//frameRight.setOrigin(btVector3(0.25f*METER, 0.0f, 0.0f));
 	//btVector3 pivotAtoB = two->GetRigidBody() ? two->GetRigidBody()->getCenterOfMassTransform().inverse()(one->GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInC;
 	//frameRight.setOrigin(pivotAtoB);
 
 
-	constraint = new btSliderConstraint(*one->GetRigidBody(), *two->GetRigidBody(), frameLeft, frameRight, false);
+	constraint = new btSliderConstraint(*one->GetRigidBody(), *two->GetRigidBody(), frameLeft, frameRight, true);
 
-	//constraint->setLowerLinLimit(1.0f*METER);
-	//constraint->setUpperLinLimit(3.0f*METER);
-	constraint->setPoweredLinMotor(false);
-	constraint->setMaxLinMotorForce(10);
-	constraint->setTargetLinMotorVelocity(1.0f);    // negative value to contract
+	constraint->setLowerAngLimit(0.0f);
+	constraint->setUpperAngLimit(0.0f);
+
+	constraint->setLowerLinLimit(1.2f*METER);
+	constraint->setUpperLinLimit(4.0f*METER);
+
+	
 	world->addConstraint(constraint, true);
 }
 
@@ -105,7 +111,9 @@ void  Muscle::Draw(Camera& camera){
 
 void Muscle::Update(float expand){
 
-	constraint->setTargetLinMotorVelocity(100.0f);
+	constraint->setPoweredLinMotor(true);
+	constraint->setMaxLinMotorForce(1 * NEWTON);
+	constraint->setTargetLinMotorVelocity(-10.0f);
 
 }
 

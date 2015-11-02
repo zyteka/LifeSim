@@ -39,6 +39,7 @@ void Object::Load(){
 		shape->calculateLocalInertia(mass, fallInertia);
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motState, shape, fallInertia);
 		rigidBody = new btRigidBody(fallRigidBodyCI);
+		rigidBody->setFriction(1.35f);
 		if (isGhost){
 			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
 		}

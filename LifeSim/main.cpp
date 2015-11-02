@@ -175,7 +175,7 @@ void Run() {
 		world->setGravity(btVector3(0, -9.82f*METER, 0));
 
 
-		Terrain testObj = Terrain(world);
+		Terrain testObj = Terrain(world, 10);
 		Object* terrain = &testObj;
 		objects.push_back(terrain);
 

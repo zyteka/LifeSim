@@ -3,8 +3,11 @@
 
 class Terrain : public Object
 {
+private:
+	uint width;
+
 public:
-	Terrain(btDiscreteDynamicsWorld*);
+	Terrain(btDiscreteDynamicsWorld*, uint);
 	~Terrain();
 };
 

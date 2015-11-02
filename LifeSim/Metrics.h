@@ -28,4 +28,5 @@
 #define GRAM 0.001f
 #define KILOGRAM 1.0f
 
+#define PI 3.14159f
 //(found out const float is bad concerning scope issues)

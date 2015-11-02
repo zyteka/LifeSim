@@ -24,8 +24,7 @@ private:
 	bool extend;
 	MuscleConnector* one;
 	MuscleConnector* two;
-	btSliderConstraint* conOne;
-	btSliderConstraint* conTwo;
+	btSliderConstraint* constraint;
 	Joint* joint;
 	Bone* left;
 	Bone* right;

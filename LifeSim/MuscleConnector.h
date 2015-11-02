@@ -15,6 +15,7 @@ private:
 	void UpdateConstraint();
 	Joint* joint;
 	Bone* bone;
+	float radius;
 	float translate;
 };
 

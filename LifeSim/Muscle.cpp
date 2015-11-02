@@ -19,15 +19,17 @@ Muscle::Muscle(btDiscreteDynamicsWorld* worldN, Bone* leftN, Bone* rightN, Joint
 	position = glm::rotate(position, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 	float height = 1.0f*METER;
-	GetVertices().push_back({ { -height / 2.0f, -height / 2.0f, -height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, -height / 2.0f, height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { -height / 2.0f, -height / 2.0f, height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, -height / 2.0f, -height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
 
-	GetVertices().push_back({ { -height / 2.0f, height / 2.0f, -height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, height / 2.0f, height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { -height / 2.0f, height / 2.0f, height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
-	GetVertices().push_back({ { height / 2.0f, height / 2.0f, -height / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	float width = 0.3f*METER;
+	GetVertices().push_back({ { -height / 2.0f, -width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { height / 2.0f, -width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -height / 2.0f, -width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { height / 2.0f, -width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+
+	GetVertices().push_back({ { -height / 2.0f, width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { height / 2.0f, width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { -height / 2.0f, width / 2.0f, width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
+	GetVertices().push_back({ { height / 2.0f, width / 2.0f, -width / 2.0f }, { 0.0f, 0.0f, 1.0f } });
 
 	GetIndices().push_back({ glm::uvec3(0, 1, 2) });
 	GetIndices().push_back({ glm::uvec3(0, 3, 1) });
@@ -61,32 +63,28 @@ void Muscle::UpdateConstraint(MuscleConnector* one, MuscleConnector* two){
 
 	btTransform frameLeft;
 	frameLeft.setIdentity();
-
+	frameLeft.setOrigin(btVector3(-0.25f*METER, 0.0f, 0.0f));
 	btTransform frameRight;
 	frameRight.setIdentity();
+	frameRight.setOrigin(btVector3(0.25f*METER, 0.0f, 0.0f));
 	//btVector3 pivotAtoB = two->GetRigidBody() ? two->GetRigidBody()->getCenterOfMassTransform().inverse()(one->GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInC;
 	//frameRight.setOrigin(pivotAtoB);
 
-	//std::swap(frameLeft, frameRight);
 
-	btTransform frameCenter;
-	frameCenter.setIdentity();
+	constraint = new btSliderConstraint(*one->GetRigidBody(), *two->GetRigidBody(), frameLeft, frameRight, false);
 
-	conOne = new btSliderConstraint(*one->GetRigidBody(), *GetRigidBody(), frameLeft, frameCenter, true);
-	conTwo = new btSliderConstraint(*two->GetRigidBody(), *GetRigidBody(), frameRight, frameCenter, true);
-
-
-	//conOne->setLowerLinLimit(3.0F*METER);
-	//conOne->setUpperLinLimit(1.0F*METER);
-
-	world->addConstraint(conOne, true);
-	world->addConstraint(conTwo, true);
+	//constraint->setLowerLinLimit(1.0f*METER);
+	//constraint->setUpperLinLimit(3.0f*METER);
+	constraint->setPoweredLinMotor(false);
+	constraint->setMaxLinMotorForce(10);
+	constraint->setTargetLinMotorVelocity(1.0f);    // negative value to contract
+	world->addConstraint(constraint, true);
 }
 
 void Muscle::UpdatePosition(){
 	one->UpdatePosition();
 	two->UpdatePosition();
-	Object::UpdatePosition();
+	position = (one->GetMatrix() + two->GetMatrix()) / 2.0f;
 }
 
 void Muscle::ChangeForce(float deltaX){
@@ -107,29 +105,8 @@ void  Muscle::Draw(Camera& camera){
 
 void Muscle::Update(float expand){
 
-	if (extend){
-		conOne->setPoweredLinMotor(true);
-		//conTwo->setPoweredLinMotor(true);
-		conOne->setMaxLinMotorForce(10*NEWTON);
-		conOne->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
+	constraint->setTargetLinMotorVelocity(100.0f);
 
-
-		conTwo->setPoweredLinMotor(true);
-		//conTwo->setPoweredLinMotor(true);
-		conTwo->setMaxLinMotorForce(10 * NEWTON);
-		conTwo->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
-	}
-	else{
-		conOne->setPoweredLinMotor(true);
-		//conTwo->setPoweredLinMotor(true);
-		conOne->setMaxLinMotorForce(10 * NEWTON);
-		conOne->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
-
-		conTwo->setPoweredLinMotor(true);
-		//conTwo->setPoweredLinMotor(true);
-		conTwo->setMaxLinMotorForce(10 * NEWTON);
-		conTwo->setTargetLinMotorVelocity(-1.0f);    // negative value to contract
-	}
 }
 
 Muscle::~Muscle()

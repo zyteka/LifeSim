@@ -53,6 +53,7 @@ void Object::Load(){
 		btRigidBody::btRigidBodyConstructionInfo
 			groundRigidBodyCI(0, motState, shape, btVector3(0, 0, 0));
 		rigidBody = new btRigidBody(groundRigidBodyCI);
+		rigidBody->setFriction(1.35f);
 		if (isGhost){
 			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
 		}

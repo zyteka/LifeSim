@@ -8,9 +8,9 @@ Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN, glm::vec3 basePos){
 	
 	float jointRadius = 0.25f*METER;
 	float capRadius = jointRadius;
-	glm::vec3 pos1 = glm::vec3(0.0f*METER, capRadius, -2.0f*METER) + basePos;
-	glm::vec3 pos2 = glm::vec3(0.0f*METER, capRadius, 0.0f*METER) + basePos;
-	glm::vec3 pos3 = glm::vec3(0.0f*METER, capRadius, 2.0f*METER) + basePos;
+	glm::vec3 pos1 = glm::vec3(0.0f*METER, capRadius+100*METER, -2.0f*METER) + basePos;
+	glm::vec3 pos2 = glm::vec3(0.0f*METER, capRadius + 100 * METER, 0.0f*METER) + basePos;
+	glm::vec3 pos3 = glm::vec3(0.0f*METER, capRadius + 100 * METER, 2.0f*METER) + basePos;
 
 	float boneSize = pos3.z - pos2.z - (jointRadius * 2) - (jointRadius*0.05f);
 

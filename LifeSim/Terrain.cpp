@@ -5,8 +5,8 @@ Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 {
 
 
-	float amplitude = 50 * METER;
-	Perlin* perlin = new Perlin(5, 0.1, amplitude, seed);
+	float amplitude = 40 * METER;
+	Perlin* perlin = new Perlin(5, 0.01, amplitude, seed);
 	width = widthN;
 	isStatic=true;
 	world = worldN;

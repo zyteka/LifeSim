@@ -157,7 +157,7 @@ Joint::~Joint()
 }
 
 void Joint::Update(){
-	//rigidBody->applyForce(btVector3(0.0f, 20.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
+	rigidBody->applyForce(btVector3(0.0f, 15.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
 	Object::Update();
 }
 

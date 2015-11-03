@@ -51,10 +51,10 @@ float Terrain::GetHeight(float x, float y){
 	float xFrac = glm::fract(newX);
 	float yFrac = glm::fract(newY);
 
-	float p1 = continuousHeightData[py*width + px];
-	float p2 = continuousHeightData[py*width + px+1];
-	float p3 = continuousHeightData[py + 1 * width + px];
-	float p4 = continuousHeightData[py + 1 * width + px + 1];
+	float p1 = continuousHeightData[(py)*width + (px)];
+	float p2 = continuousHeightData[(py)*width + (px+1)];
+	float p3 = continuousHeightData[(py + 1) * width + (px)];
+	float p4 = continuousHeightData[(py + 1) * width + (px + 1)];
 
 	// Calculate the weights for each pixel
 	float r1 = glm::mix(p1, p2, xFrac);

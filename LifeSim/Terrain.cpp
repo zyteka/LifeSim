@@ -1,15 +1,18 @@
 #include "Terrain.h"
 
 
-Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN)
+Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 {
+	Perlin* perlin = new Perlin(5, 0.2, 100*METER, seed);
 	width = widthN;
 	isStatic=true;
 	world = worldN;
 
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < width; j++) {
-			GetVertices().push_back({ { ((i / (width-1)) - (0.5f))*KILOMETER, 0.0f, ((j / (width-1)) - (0.5f))*KILOMETER }, { 0, 0.5f, 0.5f } });
+			float x = ((i / (width - 1)) - (0.5f))*KILOMETER;
+			float z = ((j / (width - 1)) - (0.5f))*KILOMETER;
+			GetVertices().push_back({ { x, perlin->Get(i, j), z}, { 0, 0.5f, 0.5f } });
 		}
 	}
 

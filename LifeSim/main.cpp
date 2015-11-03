@@ -30,6 +30,7 @@ double deltaTime;
 double physicsTimer;
 bool runPhysics;
 double timeMod;
+int seed;
 
 std::vector<Object*> objects;
 
@@ -48,6 +49,7 @@ void TogglePhysics(){
 
 void InitializeWindow() {
 
+	seed = time(NULL);
 	runPhysics = false;
 	physicsTimer = 0;
 
@@ -175,7 +177,7 @@ void Run() {
 		world->setGravity(btVector3(0, -9.82f*METER, 0));
 
 
-		Terrain testObj = Terrain(world, 2);
+		Terrain testObj = Terrain(world, 100, seed);
 		Object* terrain = &testObj;
 		objects.push_back(terrain);
 
@@ -288,7 +290,7 @@ void MouseInput() {
 void CameraInput() {
 	double moveSpeed;
 	if (glfwGetKey(mainThread, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-		moveSpeed = 9 * METER * deltaTime;
+		moveSpeed = 50 * METER * deltaTime;
 	}
 	else if (glfwGetKey(mainThread, GLFW_KEY_LEFT_ALT) == GLFW_PRESS) {
 		moveSpeed = 1 * METER * deltaTime;

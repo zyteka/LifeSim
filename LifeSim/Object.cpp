@@ -3,6 +3,8 @@
 
 Object::Object()
 {
+	isStatic = false;
+	isGhost = false;
 	position = glm::mat4();
 }
 
@@ -37,6 +39,10 @@ void Object::Load(){
 		shape->calculateLocalInertia(mass, fallInertia);
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motState, shape, fallInertia);
 		rigidBody = new btRigidBody(fallRigidBodyCI);
+		rigidBody->setFriction(1.35f);
+		if (isGhost){
+			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
+		}
 		world->addRigidBody(rigidBody);
 	}
 	else{
@@ -47,6 +53,9 @@ void Object::Load(){
 		btRigidBody::btRigidBodyConstructionInfo
 			groundRigidBodyCI(0, motState, shape, btVector3(0, 0, 0));
 		rigidBody = new btRigidBody(groundRigidBodyCI);
+		if (isGhost){
+			rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | rigidBody->CF_NO_CONTACT_RESPONSE);
+		}
 		world->addRigidBody(rigidBody);
 	}
 
@@ -74,7 +83,7 @@ void Object::Load(){
 	glBindVertexArray(0);
 }
 
-void Object::Update(){
+void Object::Update(double dt){
 	
 }
 void Object::UpdatePosition(){
@@ -93,4 +102,8 @@ btRigidBody* Object::GetRigidBody(){
 }
 glm::vec3 Object::GetPosition(){
 	return glm::vec3(position[3]);
+}
+
+glm::mat4 Object::GetMatrix(){
+	return position;
 }

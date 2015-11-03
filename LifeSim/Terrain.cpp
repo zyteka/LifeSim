@@ -1,27 +1,24 @@
 #include "Terrain.h"
 
 
-Terrain::Terrain(btDiscreteDynamicsWorld* worldN)
+Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN)
 {
+	width = widthN;
 	isStatic=true;
 	world = worldN;
-	position = glm::mat4();
 
-	Vertex fill = { { -1.0f*KILOMETER, 0.0f, -1.0f*KILOMETER }, { 0.9f, 0.9f, 0.9f } };
-	GetVertices().push_back(fill);
-	Vertex fill1 = { { 1.0f*KILOMETER, 0.0f, 1.0f*KILOMETER }, { 0.9f, 0.9f, 0.9f } };
-	GetVertices().push_back(fill1);
-	Vertex fill2 = { { -1.0f*KILOMETER, 0.0f, 1.0f*KILOMETER },{ 0.9f, 0.9f, 0.9f } };
-	GetVertices().push_back(fill2);
-	Vertex fill3 = { { 1.0f*KILOMETER, 0.0f, -1.0f*KILOMETER },{ 0.9f, 0.9f, 0.9f } };
-	GetVertices().push_back(fill3);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < width; j++) {
+			GetVertices().push_back({ { ((i / (width-1)) - (0.5f))*KILOMETER, 0.0f, ((j / (width-1)) - (0.5f))*KILOMETER }, { 0, 0.5f, 0.5f } });
+		}
+	}
 
-	Index fill4 = { glm::uvec3(0, 2, 1) };
-	GetIndices().push_back(fill4);
-	Index fill5 = { glm::uvec3(0, 1, 3) };
-	GetIndices().push_back(fill5);
-
-
+	for (int i = 0; i < width-1; i++) {
+		for (int j = 0; j < width-1; j++) {
+			GetIndices().push_back({ glm::uvec3((i + (j*width)), (i + (j*width)) + 1, i + (1 + j)*(width)) });
+			GetIndices().push_back({ glm::uvec3((i + (j*width)) + 1, i + (1 + j)*(width)+1, i + (1 + j)*(width)) });
+		}
+	}
 
 	shape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 

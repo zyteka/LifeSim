@@ -13,6 +13,7 @@
 //Function List
 void Update(double);
 void GetPositions();
+void DecrementTimers();
 void Draw();
 void CameraInput();
 void MouseInput();
@@ -48,6 +49,7 @@ void TogglePhysics(){
 void InitializeWindow() {
 
 	runPhysics = false;
+	physicsTimer = 0;
 
 	if (!glfwInit()) {
 		Terminate();
@@ -56,7 +58,7 @@ void InitializeWindow() {
 	//set screen size
 	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-	SCREEN_SIZE = glm::uvec2(720,720);
+	SCREEN_SIZE = glm::uvec2(1280,720);
 
 	//basic aa done for us ;D
 	glfwWindowHint(GLFW_SAMPLES, 16);
@@ -116,7 +118,9 @@ void InitializeWindow() {
 	glDepthMask(GL_TRUE);  // turn on
 	glDepthFunc(GL_LEQUAL);
 	glDepthRange(0.0f, 1.0f);
-	glEnable(GL_TEXTURE_2D);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	mouseChangeDegrees = glm::vec2(0);
 
@@ -144,6 +148,7 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 void Run() {
+	
 
 		SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
 		SetKey(GLFW_KEY_SPACE, std::bind(&TogglePhysics));
@@ -170,13 +175,15 @@ void Run() {
 		world->setGravity(btVector3(0, -9.82f*METER, 0));
 
 
-		Terrain testObj = Terrain(world);
+		Terrain testObj = Terrain(world, 2);
 		Object* terrain = &testObj;
 		objects.push_back(terrain);
 
-		Anatomy testOrg = Anatomy(world);
-		Object* testOrgP = &testOrg;
-		objects.push_back(testOrgP);
+		for (int i = 0; i < 30;i++){
+			Anatomy* testOrg = new Anatomy(world, glm::vec3(i*1.0f*METER, 0.0f, i*1.0f*METER));
+			Object* testOrgP = testOrg;
+			objects.push_back(testOrgP);
+		}
 
 		//GLDebugDrawer debugDraw= GLDebugDrawer(&camera);
 
@@ -219,12 +226,15 @@ void Run() {
 				glfwPollEvents(); //executes all set input callbacks
 
 				CameraInput(); //bypasses input system for direct camera manipulation
-				Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
 
-				if (runPhysics){
+				if (runPhysics){	
+					Update(deltaTime*timeMod); //updates all objects based on the constant deltaTime.
 					world->stepSimulation(deltaTime*timeMod, glm::max(10 * timeMod,10.0));
 				}
 				GetPositions(); //transforms bullet matrices to opengl
+
+
+				DecrementTimers();
 
 				t += deltaTime;
 				accumulator -= deltaTime;
@@ -250,6 +260,13 @@ void Run() {
 		delete collisionConfiguration;
 		delete broadphase;
 
+}
+
+void DecrementTimers(){
+	if (physicsTimer>0){
+		physicsTimer = physicsTimer - deltaTime;
+
+	}
 }
 void MouseInput() {
 	double xPos;
@@ -307,7 +324,7 @@ void GetPositions(){
 }
 void Update(double dt) {
 	for (int i = 0; i < objects.size(); i++){
-		objects[i]->Update();
+		objects[i]->Update(dt);
 	}
 }
 void Draw() {

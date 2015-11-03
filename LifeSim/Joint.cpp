@@ -1,12 +1,12 @@
 #include "Joint.h"
 #include "Bone.h"
 
-Joint::Joint(btDiscreteDynamicsWorld* worldN, glm::vec3 posIn, float radiusN)
+Joint::Joint(btDiscreteDynamicsWorld* worldN, glm::vec3 posIn, glm::vec3 inAxis,float radiusN)
 {
+	localAxisofRotation = inAxis;
 	isStatic = false;
 	world = worldN;
 	radius = radiusN;
-	position = glm::mat4();
 	position = glm::translate(position, glm::vec3(posIn.x, posIn.y, posIn.z));
 
 
@@ -156,9 +156,10 @@ Joint::~Joint()
 {
 }
 
-void Joint::Update(){
-	rigidBody->applyForce(btVector3(0.0f, 15.0f*NEWTON, 0.0f), btVector3(0.0f, 0.0f, 0.0f));
-	Object::Update();
+void Joint::Update(double dt){
+	//rigidBody->applyForce(btVector3(0.0f*METER, 30.0f*NEWTON, 0.0f*METER), btVector3(0.0f, 0.0f, 0.0f));
+	//rigidBody->applyForce(btVector3(2.0f*METER, 0.0f*NEWTON, 5.0f*NEWTON), btVector3(1.0f, 0.0f, 0.0f));
+	Object::Update(dt);
 }
 
 void Joint::AddBone(Bone* nBone){
@@ -167,7 +168,26 @@ void Joint::AddBone(Bone* nBone){
 
 	btVector3 pivotInB = nBone->GetRigidBody() ? nBone->GetRigidBody()->getCenterOfMassTransform().inverse()(GetRigidBody()->getCenterOfMassTransform()(pivotInA)) : pivotInA;
 
-	btPoint2PointConstraint* con = new btPoint2PointConstraint(*rigidBody, *nBone->GetRigidBody(), pivotInA, pivotInB);
+	btVector3 axisInA = btVector3(localAxisofRotation.x, localAxisofRotation.y, localAxisofRotation.z);
+
+	btRigidBody* bodyB = nBone->GetRigidBody();
+
+	btRigidBody* bodyA = GetRigidBody();
+
+	if (glm::cross(GetPosition(), nBone->GetPosition()).z<0){
+		std::swap(bodyA, bodyB);
+	}
+
+	btHingeConstraint* con = new btHingeConstraint(*bodyA, *bodyB, pivotInA, pivotInB, axisInA, axisInA, true);
+
+	//con->setLimit(PI, 2*PI, 0.5f, 0.3f, 1.0f);
+	//con->set
+
+	//con->enableMotor(true);
+	//con->setMaxMotorImpulse(200.0f);
+	//con->setMotorTarget(0, 1.0f / 60.0f);
+
 	world->addConstraint(con, true);
+
 	bones.insert(nBone);
 }

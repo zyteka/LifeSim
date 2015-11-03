@@ -10,10 +10,10 @@ class Bone : public Object
 public:
 	Bone(btDiscreteDynamicsWorld*,Joint *,Joint*,glm::vec3,float,float);
 	~Bone();
-
+	float height;
 private:
 	float radius;
-	float height;
+	
 	Joint* endLeft;
 	Joint* endRight;
 

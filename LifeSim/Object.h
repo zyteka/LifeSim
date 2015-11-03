@@ -13,9 +13,10 @@ public:
 
 	virtual void Draw(Camera&);
 	virtual void Load();
-	virtual void Update();
+	virtual void Update(double );
 	btRigidBody* GetRigidBody();
 	glm::vec3 GetPosition();
+	glm::mat4 GetMatrix();
 
 	virtual void UpdatePosition();
 
@@ -24,6 +25,7 @@ public:
 
 protected:
 	bool isStatic;
+	bool isGhost;
 	btDiscreteDynamicsWorld* world;
 	btCollisionShape* shape;
 	btRigidBody* rigidBody;

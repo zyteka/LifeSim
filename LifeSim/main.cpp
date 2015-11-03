@@ -60,8 +60,6 @@ void ToggleWireFrame(){
 
 		wireframeToggle = !wireframeToggle;
 		wireframeTimer = 0.35f;
-
-		
 	}
 }
 void InitializeWindow() {

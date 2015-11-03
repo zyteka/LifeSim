@@ -3,15 +3,15 @@
 
 Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 {
-	Perlin* perlin = new Perlin(5, 0.9, 100*METER, seed);
+	Perlin* perlin = new Perlin(5, 0.1, 25*METER, seed);
 	width = widthN;
 	isStatic=true;
 	world = worldN;
 
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < width; j++) {
-			float x = ((i / (width - 1)) - (0.5f))*KILOMETER;
-			float z = ((j / (width - 1)) - (0.5f))*KILOMETER;
+			float x = ((i / (width - 1.0f)) - (0.5f))*KILOMETER;
+			float z = ((j / (width - 1.0f)) - (0.5f))*KILOMETER;
 			GetVertices().push_back({ { x, perlin->Get(i, j), z}, { 0.9f, 0.9f, 0.9f } });
 		}
 	}

@@ -2,25 +2,32 @@
 
 
 
-Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN, glm::vec3 basePos){
+Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN, Terrain* terrainN){
 
 	world = worldN;
+	terrain = terrainN;
+}
+
+void Anatomy::CreateOrganism(Anatomy*){
 	
-	float jointRadius = 0.25f*METER;
+
+}
+void Anatomy::CreateOrganism(glm::vec3 basePos){
+float jointRadius = 0.25f*METER;
 	float capRadius = jointRadius;
-	glm::vec3 pos1 = glm::vec3(0.0f*METER, capRadius+100*METER, -2.0f*METER) + basePos;
-	glm::vec3 pos2 = glm::vec3(0.0f*METER, capRadius + 100 * METER, 0.0f*METER) + basePos;
-	glm::vec3 pos3 = glm::vec3(0.0f*METER, capRadius + 100 * METER, 2.0f*METER) + basePos;
+	glm::vec3 pos1 = glm::vec3(0.0f*METER, capRadius, -2.0f*METER) + basePos;
+	glm::vec3 pos2 = glm::vec3(0.0f*METER, capRadius, 0.0f*METER) + basePos;
+	glm::vec3 pos3 = glm::vec3(0.0f*METER, capRadius, 2.0f*METER) + basePos;
 
 	float boneSize = pos3.z - pos2.z - (jointRadius * 2) - (jointRadius*0.05f);
 
 	glm::vec3 bonePosition = (pos1 + pos2) / 2.0f;
 	glm::vec3 bonePosition1 = (pos3 + pos2) / 2.0f;
 
-	Joint* joint2 = new Joint(world, pos2, glm::vec3(1.0f,0.0f,0.0f),jointRadius);
+	Joint* joint2 = new Joint(world, pos2, glm::vec3(1.0f, 0.0f, 0.0f), jointRadius);
 
-	Bone* bone1 = new Bone(worldN, joint2,NULL , bonePosition, capRadius, boneSize);
-	Bone* bone2 = new Bone(worldN, joint2, NULL, bonePosition1, capRadius, boneSize);
+	Bone* bone1 = new Bone(world, joint2, NULL, bonePosition, capRadius, boneSize);
+	Bone* bone2 = new Bone(world, joint2, NULL, bonePosition1, capRadius, boneSize);
 
 	bones.insert(bone1);
 	joint2->AddBone(bone1);
@@ -30,8 +37,9 @@ Anatomy::Anatomy(btDiscreteDynamicsWorld* worldN, glm::vec3 basePos){
 
 	joints.insert(joint2);
 
-	Muscle* muscle1 = new Muscle(worldN,bone1, bone2, joint2, 1.0f,1.0f);
+	Muscle* muscle1 = new Muscle(world, bone1, bone2, joint2, 1.0f, 1.0f);
 	muscles.insert(muscle1);
+
 }
 
 Anatomy::~Anatomy(){

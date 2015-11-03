@@ -194,14 +194,19 @@ void Run() {
 		world->setGravity(btVector3(0, -9.82f*METER, 0));
 
 
-		Terrain testObj = Terrain(world, 10, seed);
-		Object* terrain = &testObj;
-		objects.push_back(terrain);
+		Terrain terrain = Terrain(world, 10, seed);
+		Object* terrainP = &terrain;
+		objects.push_back(terrainP);
 
 		for (int i = 0; i < 30;i++){
-			Anatomy* testOrg = new Anatomy(world, glm::vec3(i*1.0f*METER, 0.0f, i*1.0f*METER));
+			Anatomy* testOrg = new Anatomy(world, &terrain);
 			Object* testOrgP = testOrg;
 			objects.push_back(testOrgP);
+
+
+			float x = ((rand() % 50) - 25)*METER;
+			float y = ((rand() % 50) - 25)*METER;
+			testOrg->CreateOrganism(glm::vec3(x, terrain.GetHeight(x, y), y));
 		}
 
 		//GLDebugDrawer debugDraw= GLDebugDrawer(&camera);
@@ -222,7 +227,8 @@ void Run() {
 
 
 		//THIS IS TO SPEED UP TIME
-		timeMod = 1.;
+		timeMod = 1.0f;
+
 
 		while (!glfwWindowShouldClose(mainThread)) {
 			double newTime = glfwGetTime();

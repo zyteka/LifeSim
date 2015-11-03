@@ -39,6 +39,30 @@ Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 	Load(); //loads drawing related stuff. Call after vertices/indices have been defined
 }
 
+//uses bilinear interpolation
+float Terrain::GetHeight(float x, float y){
+
+	float newX = (x + (KILOMETER / 2.0f)) / (KILOMETER/(float)width);
+	float newY = (y + (KILOMETER / 2.0f)) / (KILOMETER / (float)width);
+
+	uint px = glm::floor(newX);
+	uint py = glm::floor(newY);
+
+	float xFrac = glm::fract(newX);
+	float yFrac = glm::fract(newY);
+
+	float p1 = continuousHeightData[py*width + px];
+	float p2 = continuousHeightData[py*width + px+1];
+	float p3 = continuousHeightData[py + 1 * width + px];
+	float p4 = continuousHeightData[py + 1 * width + px + 1];
+
+	// Calculate the weights for each pixel
+	float r1 = glm::mix(p1, p2, xFrac);
+	float r2 = glm::mix(p3, p4, xFrac);
+
+	return glm::mix(r1, r2, yFrac);
+
+}
 
 Terrain::~Terrain()
 {

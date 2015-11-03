@@ -31,7 +31,8 @@ double physicsTimer;
 bool runPhysics;
 double timeMod;
 int seed;
-
+bool wireframeToggle;
+double wireframeTimer;
 std::vector<Object*> objects;
 
 
@@ -46,12 +47,29 @@ void TogglePhysics(){
 		physicsTimer = 0.35f;
 	}
 }
+void ToggleWireFrame(){
+	if (wireframeTimer <= 0){
+		
+		if (wireframeToggle){
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+		else if (!wireframeToggle){
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+		}
+
+		wireframeToggle = !wireframeToggle;
+		wireframeTimer = 0.35f;
+
+		
+	}
+}
 void InitializeWindow() {
-
+	wireframeToggle = false;
 	seed = time(NULL);
 	runPhysics = false;
 	physicsTimer = 0;
+	wireframeTimer = 0;
 
 	if (!glfwInit()) {
 		Terminate();
@@ -154,6 +172,7 @@ void Run() {
 
 		SetKey(GLFW_KEY_ESCAPE, std::bind(&Terminate));
 		SetKey(GLFW_KEY_SPACE, std::bind(&TogglePhysics));
+		SetKey(GLFW_KEY_E, std::bind(&ToggleWireFrame));
 
 		deltaTime = 1.0 / 60.0;
 		InitializeWindow();
@@ -267,7 +286,10 @@ void Run() {
 void DecrementTimers(){
 	if (physicsTimer>0){
 		physicsTimer = physicsTimer - deltaTime;
-
+		wireframeTimer = wireframeTimer - deltaTime;
+	}
+	if (wireframeTimer>0){
+		wireframeTimer = wireframeTimer - deltaTime;
 	}
 }
 void MouseInput() {

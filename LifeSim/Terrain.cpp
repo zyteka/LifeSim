@@ -3,7 +3,7 @@
 
 Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 {
-	Perlin* perlin = new Perlin(5, 0.2, 100*METER, seed);
+	Perlin* perlin = new Perlin(5, 0.9, 100*METER, seed);
 	width = widthN;
 	isStatic=true;
 	world = worldN;
@@ -12,7 +12,7 @@ Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 		for (int j = 0; j < width; j++) {
 			float x = ((i / (width - 1)) - (0.5f))*KILOMETER;
 			float z = ((j / (width - 1)) - (0.5f))*KILOMETER;
-			GetVertices().push_back({ { x, perlin->Get(i, j), z}, { 0, 0.5f, 0.5f } });
+			GetVertices().push_back({ { x, perlin->Get(i, j), z}, { 0.9f, 0.9f, 0.9f } });
 		}
 	}
 

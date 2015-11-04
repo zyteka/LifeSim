@@ -194,7 +194,7 @@ void Run() {
 		world->setGravity(btVector3(0, -9.82f*METER, 0));
 
 
-		Terrain terrain = Terrain(world, 400, seed);
+		Terrain terrain = Terrain(world, 200, seed);
 		Object* terrainP = &terrain;
 		objects.push_back(terrainP);
 

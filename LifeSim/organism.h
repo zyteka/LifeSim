@@ -32,11 +32,12 @@ public:
 	//Attempt to Mutate Organism
 	bool mutate();
 
-	//Stores the Organism's Current Priorities
-	//std::list<std::function<bool(boost::any)> > priorities;
-
 	//Age of the Organism
 	float age;
+
+	//Preform Top Priority
+	bool act(Organism Other);
+
 
 	
 
@@ -84,9 +85,8 @@ private:
 	//Time the organism went to sleep (0 if awake)
 	float asleepSince;
 
-	/*struct priority {
-		bool operator() {}
-	};*/
+	//Stores the Organism's Current Priorities
+	std::set<std::pair<float, Action> > priorities;
 
 
 

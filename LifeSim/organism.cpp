@@ -33,6 +33,14 @@ Organism::Organism()
 	//energy = GetDistribution(std::uniform_int_distribution<int>(0, maxEnergy() ));
 
 	age = 0.0;
+
+	for (int i = 0; i < ENUMSIZE; ++i){
+		float priority = GetDistribution(std::normal_distribution<float>(0.5f, 0.1));
+		if (priority < 0) priority = 0;
+		if (priority > 1) priority = 1;
+
+		priorities.insert(std::make_pair(priority, static_cast<Action>(i)));
+	}
 }
 
 //Destructor
@@ -164,4 +172,28 @@ bool Organism::evalEnergy(float mult) const {
 unsigned int Organism::maxEnergy() const {
 	//Note: may want to update/tweak this in the future (add multiplier)
 	return getSpecies();
+}
+
+//Preform Top Priority
+bool Organism::act(Organism Other) {
+	auto itr = priorities.rbegin();
+
+	Action a = itr->second;
+	bool success;
+
+	switch (a) {
+		case SLEEP		:	success = sleep(time(NULL));	break; //Correct time usage?
+		case EAT		:	success = eat();				break;
+		case REPRODUCE	:	success = reproduce(Other);		break;
+		case WAKEUP:	success = wakeUp(time(NULL));		break; //Correct time usage?
+	}
+
+	PriorityType::iterator itr2 = priorities.begin();
+
+	std::pair<float, Action> tmp = std::make_pair((itr2->first) / 2, itr->second);
+	//priorities.erase(itr);
+
+	priorities.insert(tmp);
+
+	return success;
 }

@@ -24,5 +24,4 @@
 #include "GlobalStructures.h"
 #include <functional>
 #include "btBulletDynamicsCommon.h"
-//#include "PriorityQueue.h"
 #include "Typedefs.h"

@@ -176,11 +176,17 @@ unsigned int Organism::maxEnergy() const {
 
 //Preform Top Priority
 bool Organism::act(Organism Other) {
+
+	//Get Action with top priority
 	auto itr = priorities.rbegin();
 
+	//Assign Action associated with top priority
 	Action a = itr->second;
+
+	//Capture success of attempted Action
 	bool success;
 
+	//How Organism should act based on top priority
 	switch (a) {
 		case SLEEP		:	success = sleep(time(NULL));			break; //Correct time usage?
 		case EAT		:	success = eat();						break;
@@ -189,12 +195,21 @@ bool Organism::act(Organism Other) {
 		default			:	std::cerr << a << std::endl; exit(1);	break;
 	}
 
-	PriorityType::iterator itr2 = priorities.begin();
+	//If Action is successful, readjust its priority
+	if (success) {
 
-	std::pair<float, Action> tmp = std::make_pair((itr2->first) / 2, itr->second);
-	priorities.erase(std::next(itr).base());
+		//Get Action With lowest priority
+		PriorityType::iterator itr2 = priorities.begin();
 
-	priorities.insert(tmp);
+		//Set new priority to half of the current lowest priority
+		std::pair<float, Action> tmp = std::make_pair((itr2->first) / 2, itr->second);
+
+		//Erase previous top priority Action from set of Actions
+		priorities.erase(std::next(itr).base());
+
+		//Reinsert Action with its new priority into set of Actions
+		priorities.insert(tmp);
+	}
 
 	return success;
 }

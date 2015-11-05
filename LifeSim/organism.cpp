@@ -34,7 +34,7 @@ Organism::Organism()
 
 	age = 0.0;
 
-	for (int i = 0; i < ENUMSIZE; ++i){
+	for (int i = 0; i < ACTIONSIZE; ++i){
 		float priority = GetDistribution(std::normal_distribution<float>(0.5f, 0.1));
 		if (priority < 0) priority = 0;
 		if (priority > 1) priority = 1;
@@ -182,10 +182,11 @@ bool Organism::act(Organism Other) {
 	bool success;
 
 	switch (a) {
-		case SLEEP		:	success = sleep(time(NULL));	break; //Correct time usage?
-		case EAT		:	success = eat();				break;
-		case REPRODUCE	:	success = reproduce(Other);		break;
-		case WAKEUP		:	success = wakeUp(time(NULL));	break; //Correct time usage?
+		case SLEEP		:	success = sleep(time(NULL));			break; //Correct time usage?
+		case EAT		:	success = eat();						break;
+		case REPRODUCE	:	success = reproduce(Other);				break;
+		case WAKEUP		:	success = wakeUp(time(NULL));			break; //Correct time usage?
+		default			:	std::cerr << a << std::endl; exit(1);	break;
 	}
 
 	PriorityType::iterator itr2 = priorities.begin();

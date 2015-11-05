@@ -94,7 +94,7 @@ bool Organism::eat() {
 	//Determine if Organism has enough energy to digest food
 	//Note: May want to change this multiplier to be variable 
 	//based on the Anatomy of the Organism
-	if (!evalEnergy(0.03)) return false;
+	//if (!evalEnergy(0.03)) return false;
 
 
 	return false;
@@ -106,7 +106,7 @@ bool Organism::sleep(float curTime) {
 	if (asleep) return false;
 	
 	//Organism is well rested, so sleep is unnecessary
-	if (energy > maxEnergy() / 2) return false;
+	//if (energy > maxEnergy() / 2) return false;
 
 	asleepSince = curTime;
 	asleep = true;
@@ -120,7 +120,7 @@ bool Organism::wakeUp(float curTime) {
 	if (!asleep) return false;
 
 	//Organism has not yet rested enough
-	if (energy < 9 * maxEnergy() / 10) return false;
+	//if (energy < 9 * maxEnergy() / 10) return false;
 
 	//Note: Tweak Sleep Energy Gain multiplier
 	energy += (curTime - asleepSince) * 0.05;
@@ -142,9 +142,9 @@ bool Organism::reproduce(Organism other) {
 	}
 
 	//Organism needs enough energy to reproduce
-	if (!evalEnergy(0.85)) {
+	/*if (!evalEnergy(0.85)) {
 		return false;
-	}
+	}*/
 
 	/*
 		Insert reproduction code here
@@ -185,13 +185,13 @@ bool Organism::act(Organism Other) {
 		case SLEEP		:	success = sleep(time(NULL));	break; //Correct time usage?
 		case EAT		:	success = eat();				break;
 		case REPRODUCE	:	success = reproduce(Other);		break;
-		case WAKEUP:	success = wakeUp(time(NULL));		break; //Correct time usage?
+		case WAKEUP		:	success = wakeUp(time(NULL));	break; //Correct time usage?
 	}
 
 	PriorityType::iterator itr2 = priorities.begin();
 
 	std::pair<float, Action> tmp = std::make_pair((itr2->first) / 2, itr->second);
-	//priorities.erase(itr);
+	priorities.erase(std::next(itr).base());
 
 	priorities.insert(tmp);
 

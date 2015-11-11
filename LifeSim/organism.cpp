@@ -235,6 +235,10 @@ void Organism::balanceEnergy() {
 		float y = itr->first;
 		float x = (c / a) + ((d - c) / (b - a)) * (y - a);
 
+		//Correct for floating point arithmetic errors
+		x = std::min(x, 1.0f);
+		x = std::max(x, 0.0f);
+
 		//Create pair using new value
 		std::pair<float, Action> tmp = std::make_pair(y, itr->second);
 

@@ -57,6 +57,9 @@ private:
 	//Maximum Energy the Organism may store
 	unsigned int maxEnergy() const;
 
+	//Rebalance the Organism's Priorities
+	void balanceEnergy();
+
 
 	//================================================================
 	//================================================================

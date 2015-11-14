@@ -1,11 +1,11 @@
 #pragma once
 #include "BasicIncludes.h"
-#define ACTIONSIZE 4
 
 //Type definitions used in the program
 
 enum Action {SLEEP, EAT, REPRODUCE, WAKEUP};
 
+#define ACTIONSIZE 4
 #define ACTIONBEGIN SLEEP
 #define ACTIONEND WAKEUP
 

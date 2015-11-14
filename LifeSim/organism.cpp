@@ -35,7 +35,7 @@ Organism::Organism()
 	age = 0.0;
 
 	for (int i = 0; i < ACTIONSIZE; ++i){
-		float priority = GetDistribution(std::normal_distribution<float>(0.5f, 0.1));
+		float priority = GetDistribution(std::normal_distribution<float>(0.5f, 0.1f));
 		if (priority < 0) priority = 0;
 		if (priority > 1) priority = 1;
 
@@ -178,7 +178,7 @@ unsigned int Organism::maxEnergy() const {
 bool Organism::act(Organism Other) {
 
 	//Get Action with top priority
-	auto itr = priorities.rbegin();
+	PriorityType::reverse_iterator itr = priorities.rbegin();
 
 	//Assign Action associated with top priority
 	Action a = itr->second;
@@ -188,10 +188,10 @@ bool Organism::act(Organism Other) {
 
 	//How Organism should act based on top priority
 	switch (a) {
-		case SLEEP		:	success = sleep(time(NULL));			break; //Correct time usage?
+		case SLEEP		:	success = sleep(time(NULL));			break; 
 		case EAT		:	success = eat();						break;
 		case REPRODUCE	:	success = reproduce(Other);				break;
-		case WAKEUP		:	success = wakeUp(time(NULL));			break; //Correct time usage?
+		case WAKEUP		:	success = wakeUp(time(NULL));			break; 
 		default			:	std::cerr << a << std::endl; exit(1);	break;
 	}
 
@@ -209,7 +209,49 @@ bool Organism::act(Organism Other) {
 
 		//Reinsert Action with its new priority into set of Actions
 		priorities.insert(tmp);
+
+		//Rebalance the Organism's Priorities to prevent
+		//convergence to zero
+		balanceEnergy();
 	}
 
 	return success;
+}
+
+//Rebalance the Organism's Priorities
+void Organism::balanceEnergy() {
+
+	//Get initial bounds of distribution
+	float a = priorities.begin()->first;
+	float b = priorities.rbegin()->first;
+
+	//New bounds for normalization
+	float c = 0.0; //GetDistribution(std::normal_distribution<float>(0.25f, 0.05f));
+	float d = 1.0; //GetDistribution(std::normal_distribution<float>(0.75f, 0.05f));
+
+	for (PriorityType::iterator itr = priorities.begin(); itr != priorities.end();) {
+
+		//Get current value and transform to new value
+		float y = itr->first;
+		float x = (c / a) + ((d - c) / (b - a)) * (y - a);
+
+		//Correct for floating point arithmetic errors
+		x = std::min(x, 1.0f);
+		x = std::max(x, 0.0f);
+
+		//Create pair using new value
+		std::pair<float, Action> tmp = std::make_pair(y, itr->second);
+
+		//Store temporary iterator before erasing old pair
+		PriorityType::iterator itr2 = itr;
+		itr2++;
+
+		//Erase old pair and insert the new one
+		priorities.erase(itr);
+		priorities.insert(tmp);
+
+		//Copy the temporary iterator back to the main one
+		itr = itr2;
+	}
+	
 }

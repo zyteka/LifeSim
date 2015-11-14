@@ -18,7 +18,7 @@ public:
 	void UpdatePosition();
 
 	void CreateOrganism(Anatomy*);
-	void CreateOrganism(glm::vec3);
+	void CreateBaseOrganism(glm::vec3);
 
 	//Convert Anatomy to unsigned int for use in hashing
 	operator unsigned int() const;

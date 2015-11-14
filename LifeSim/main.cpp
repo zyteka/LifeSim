@@ -206,7 +206,7 @@ void Run() {
 
 			float x = ((rand() % 50) - 25)*METER;
 			float y = ((rand() % 50) - 25)*METER;
-			testOrg->CreateOrganism(glm::vec3(x, terrain.GetHeight(x, y), y));
+			testOrg->CreateBaseOrganism(glm::vec3(x, 0.0f, y));
 		}
 
 		//GLDebugDrawer debugDraw= GLDebugDrawer(&camera);

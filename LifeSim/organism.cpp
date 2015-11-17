@@ -233,7 +233,7 @@ void Organism::balanceEnergy() {
 
 		//Get current value and transform to new value
 		float y = itr->first;
-		float x = (c / a) + ((d - c) / (b - a)) * (y - a);
+		float x = (c / a) + ((d - c) / (b - a)) * (y - a); // First term may need to be changed to c
 
 		//Correct for floating point arithmetic errors
 		x = std::min(x, 1.0f);

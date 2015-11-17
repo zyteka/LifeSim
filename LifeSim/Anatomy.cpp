@@ -106,15 +106,15 @@ Anatomy::operator unsigned int() const {
 	unsigned int hashsum = 487159078;
 
 	for (auto itr = bones.cbegin(); itr != bones.cend(); ++itr) {
-		hashsum << *reinterpret_cast<unsigned int *>(&**itr);
+		hashsum << (*reinterpret_cast<unsigned int *>(&**itr) / (UINT16_MAX / 4));
 	}
 
 	for (auto itr = joints.cbegin(); itr != joints.cend(); ++itr) {
-		hashsum >> *reinterpret_cast<unsigned int *>(&**itr);
+		hashsum >> (*reinterpret_cast<unsigned int *>(&**itr) / (UINT16_MAX / 6));
 	}
 
 	for (auto itr = muscles.cbegin(); itr != muscles.cend(); ++itr) {
-		hashsum << *reinterpret_cast<unsigned int *>(&**itr);
+		hashsum << (*reinterpret_cast<unsigned int *>(&**itr) / (UINT16_MAX / 2));
 	}
 
 	return hashsum;

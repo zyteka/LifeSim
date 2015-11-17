@@ -18,6 +18,7 @@
 #include <stdexcept>
 #include <math.h>
 #include <cmath>
+#include <climits>
 #include <algorithm>
 #include <functional>
 #include "Metrics.h"

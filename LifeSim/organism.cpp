@@ -69,7 +69,7 @@ unsigned int Organism::getSpecies() const {
 		//hashsum += *q;
 	}
 
-	return 0;
+	return hashsum;
 }
 
 //Compare "Species" of 2 Organisms

@@ -42,7 +42,7 @@ Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 //uses bilinear interpolation
 float Terrain::GetHeight(float x, float y){
 
-	float newX = (x + (KILOMETER / 2.0f)) / (KILOMETER/(float)width);
+	float newX = (x + (KILOMETER / 2.0f)) / (KILOMETER / (float)width);
 	float newY = (y + (KILOMETER / 2.0f)) / (KILOMETER / (float)width);
 
 	uint px = glm::floor(newX);

@@ -12,12 +12,22 @@ void Anatomy::CreateOrganism(Anatomy*){
 	
 
 }
-void Anatomy::CreateOrganism(glm::vec3 basePos){
+void Anatomy::CreateBaseOrganism(glm::vec3 basePos){
 float jointRadius = 0.25f*METER;
 	float capRadius = jointRadius;
-	glm::vec3 pos1 = glm::vec3(0.0f*METER, capRadius+3*METER, -2.0f*METER) + basePos;
-	glm::vec3 pos2 = glm::vec3(0.0f*METER, capRadius + 3 * METER, 0.0f*METER) + basePos;
-	glm::vec3 pos3 = glm::vec3(0.0f*METER, capRadius + 3 * METER, 2.0f*METER) + basePos;
+
+	float x1 = 0.0f*METER + basePos.x;
+	float y1 = -2.0f*METER + basePos.z;
+
+	float x2 = 0.0f*METER + basePos.x;
+	float y2 = 0.0f*METER + basePos.z;
+
+	float x3 = 0.0f*METER + basePos.x;
+	float y3 = 2.0f*METER + basePos.z;
+
+	glm::vec3 pos1 = glm::vec3(x1, terrain->GetHeight(x1, y1) + capRadius, y1);
+	glm::vec3 pos2 = glm::vec3(x2, terrain->GetHeight(x2, y2) + capRadius, y2);
+	glm::vec3 pos3 = glm::vec3(x3, terrain->GetHeight(x3, y3) + capRadius, y3);
 
 	float boneSize = pos3.z - pos2.z - (jointRadius * 2) - (jointRadius*0.05f);
 

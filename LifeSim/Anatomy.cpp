@@ -12,6 +12,7 @@ void Anatomy::CreateOrganism(Anatomy*){
 	
 
 }
+
 void Anatomy::CreateBaseOrganism(glm::vec3 basePos){
 float jointRadius = 0.25f*METER;
 	float capRadius = jointRadius;
@@ -61,6 +62,7 @@ Anatomy::~Anatomy(){
 void Anatomy::Load(){
 
 }
+
 void  Anatomy::Draw(Camera& camera){
 	for (std::set<Bone*>::iterator i = bones.begin(); i != bones.end(); i++) {
 		(*i)->Draw(camera);
@@ -72,6 +74,7 @@ void  Anatomy::Draw(Camera& camera){
 		(*i)->Draw(camera);
 	}
 }
+
 void  Anatomy::Update(double dt){
 	for (std::set<Bone*>::iterator i = bones.begin(); i != bones.end(); i++) {
 		(*i)->Update(dt);
@@ -84,6 +87,7 @@ void  Anatomy::Update(double dt){
 		(*i)->Update(dt);
 	}
 }
+
 void  Anatomy::UpdatePosition(){
 	for (std::set<Bone*>::iterator i = bones.begin(); i != bones.end(); i++) {
 		(*i)->UpdatePosition();
@@ -98,9 +102,20 @@ void  Anatomy::UpdatePosition(){
 
 //Convert Anatomy to unsigned int for use in hashing
 Anatomy::operator unsigned int() const {
-	/*
-		Implement this function once Anatomy member variables are deifned
-	*/
 
-	return 0;
+	unsigned int hashsum = 487159078;
+
+	for (auto itr = bones.cbegin(); itr != bones.cend(); ++itr) {
+		hashsum << *reinterpret_cast<unsigned int *>(&**itr);
+	}
+
+	for (auto itr = joints.cbegin(); itr != joints.cend(); ++itr) {
+		hashsum >> *reinterpret_cast<unsigned int *>(&**itr);
+	}
+
+	for (auto itr = muscles.cbegin(); itr != muscles.cend(); ++itr) {
+		hashsum << *reinterpret_cast<unsigned int *>(&**itr);
+	}
+
+	return hashsum;
 }

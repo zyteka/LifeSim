@@ -7,7 +7,9 @@
 //This class represents anything that is drawable onscreen. 
 class Object
 {
+
 public:
+
 	Object();
 	~Object();
 
@@ -24,13 +26,16 @@ public:
 	std::vector<Vertex>& GetVertices();
 
 protected:
+
 	bool isStatic;
 	bool isGhost;
 	btDiscreteDynamicsWorld* world;
 	btCollisionShape* shape;
 	btRigidBody* rigidBody;
 	glm::mat4 position;
+
 private:
+
 	std::vector<Vertex> vertices;
 	std::vector<Index> indices;
 

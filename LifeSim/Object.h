@@ -27,9 +27,11 @@ public:
 
 protected:
 
+	// protected variables
+
 	bool isStatic;
 	bool isGhost;
-	btDiscreteDynamicsWorld* world;
+	btDiscreteDynamicsWorld* world;  
 	btCollisionShape* shape;
 	btRigidBody* rigidBody;
 	glm::mat4 position;

@@ -34,7 +34,7 @@ protected:
 	btRigidBody* rigidBody;
 	glm::mat4 position;
 
-private:
+private:  
 
 	std::vector<Vertex> vertices;
 	std::vector<Index> indices;

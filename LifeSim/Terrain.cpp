@@ -4,8 +4,9 @@
 Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 {
 
-
-	float amplitude = 40 * METER;
+	//determines range of heights
+	float amplitude = 40 * METER; 
+	//creates new perlin noise generator
 	Perlin* perlin = new Perlin(5, 0.01, amplitude, seed);
 	width = widthN;
 	isStatic=true;
@@ -13,16 +14,18 @@ Terrain::Terrain(btDiscreteDynamicsWorld* worldN, uint widthN, int seed)
 
 	continuousHeightData = new float[width*width];
 
+	//create terrain triangles
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < width; j++) {
-			float x = ((i / (width - 1.0f)) - (0.5f))*KILOMETER;
+			float x = ((i / (width - 1.0f)) - (0.5f))*KILOMETER; 
 			float z = ((j / (width - 1.0f)) - (0.5f))*KILOMETER;
-			float y =  perlin->Get(i, j);
+			float y =  perlin->Get(i, j); //height of point
 			GetVertices().push_back({ { x, y, z }, { 0.9f, 0.9f, 0.9f } });
 
 			continuousHeightData[i + j*width] = y;
 		}
 	}
+
 
 	for (int i = 0; i < width-1; i++) {
 		for (int j = 0; j < width-1; j++) {
